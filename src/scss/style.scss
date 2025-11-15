@@ -1,0 +1,74 @@
+@use 'lib' as * with ($breakpoints: ('xxxs': 360px,
+		'xxs': 480px,
+		'xs': 640px,
+		'sm': 780px,
+		'md': 960px,
+		'lg': 1100px,
+		'xlg': 1280px,
+		'xxlg': 1440px,
+		'xxxlg': 1680px,
+		'xxxxlg': 1928px));
+
+@use "../blocks/**/*.scss";
+
+@keyframes arrow {
+	0% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(10px);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+
+}
+
+// Подключение шрифтов
+
+@include font-face("Bounded-Black", "Bounded", 900);
+@include font-face("Bounded-ExtraLight", "Bounded", 200);
+@include font-face("Bounded-Regular", "Bounded", 400);
+@include font-face("Bounded-Variable", "Bounded", 400);
+
+@include font-face("Montserrat-Black", "Montserrat", 900);
+@include font-face("Montserrat-Bold", "Montserrat", 700);
+@include font-face("Montserrat-ExtraBold", "Montserrat", 800);
+@include font-face("Montserrat-ExtraLight", "Montserrat", 200);
+@include font-face("Montserrat-Light", "Montserrat", 300);
+@include font-face("Montserrat-Medium", "Montserrat", 500);
+@include font-face("Montserrat-Regular", "Montserrat", 400);
+@include font-face("Montserrat-SemiBold", "Montserrat", 600);
+@include font-face("Montserrat-Thin", "Montserrat", 100);
+
+
+body,
+html {
+	background-color: var(--sand);
+	font-size: var(--size);
+	color: var(--sand);
+	font-family: "Montserrat", sans-serif;
+	line-height: 1.2;
+	font-weight: 400;
+	min-height: 100vh;
+	scrollbar-width: none;
+}
+
+.footer {
+	flex: 0 0 auto;
+	margin-top: auto;
+}
+
+.sprite {
+	display: none;
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: bold;
+}

@@ -1,0 +1,270 @@
+@use 'lib' as *;
+
+.apartaments {
+	$self: &;
+
+	min-height: fit-content;
+	position: relative;
+	font-family: "Montserrat", sans-serif;
+	background: var(--sand);
+
+	&__wrapper {
+		position: relative;
+		height: fluid(1836px, 720px);
+		overflow: hidden;
+		border-radius: fluid(40%, 20%) fluid(40%, 20%) 0 0;
+	}
+
+	&__container {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: end;
+		height: 100%;
+	}
+
+	&__content {
+		position: sticky;
+		bottom: 0;
+		left: 0;
+		height: fit-content;
+		padding-bottom: 100px;
+	}
+
+	&__title {
+		font-size: fluid(140px, 35px);
+		font-weight: 300;
+		margin-bottom: fluid(150px, 40px);
+
+		overflow: hidden;
+
+		span {
+			display: block;
+		}
+
+	}
+
+	&__chooses-wrapper {
+		overflow: hidden;
+	}
+
+	&__chooses {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		min-height: 469px;
+		position: relative;
+		background: var(--sand);
+
+		@include media("<=md") {
+			min-height: 135px;
+		}
+	}
+
+	&__chooses-text {
+		position: absolute;
+		left: 50%;
+		top: 60px;
+		transform: translateX(-50%);
+		color: var(--brick);
+		font-size: 180px;
+		line-height: 100%;
+
+		@include media("<=md") {
+			display: none;
+		}
+	}
+
+	&__choose {
+		padding: 60px 40px;
+		position: relative;
+		background: var(--sand);
+		transition: all var(--trans);
+
+		&:nth-child(1) {
+			border-right: 0.5px solid #9A9A9A;
+		}
+
+		&:nth-child(2) {}
+
+		@include media("<=md") {
+			padding: 15px 24px;
+		}
+
+		&:hover {
+			background: rgba($color: #dfddda, $alpha: 1.0);
+
+			#{$self}__choose-title {
+				transform: translateY(10px);
+			}
+		}
+	}
+
+	&__choose_left &__choose-btn {
+		background: var(--green);
+		bottom: 140px;
+		left: 160px;
+
+		@include media("<=md") {
+			bottom: 45px;
+			left: 103px;
+		}
+	}
+
+	&__choose_right &__choose-btn {
+		background: var(--brick);
+		bottom: 60px;
+		right: 100px;
+		z-index: 3;
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 250%;
+			height: 250%;
+			background: rgba($color: #875041, $alpha: 0.1);
+			z-index: 2;
+			border-radius: 50%;
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 450%;
+			height: 450%;
+			background: rgba($color: #875041, $alpha: 0.05);
+			z-index: 1;
+			border-radius: 50%;
+		}
+
+		@include media("<=md") {
+			bottom: 20px;
+			right: 20px;
+			background: none;
+		}
+
+	}
+
+	&__choose_right &__choose-container {
+		align-items: end;
+
+		@include media("<=md") {
+			align-items: start;
+		}
+	}
+
+	&__choose_right &__choose-title {
+		text-align: right;
+		color: var(--green);
+
+		@include media("<=md") {
+			text-align: start;
+		}
+	}
+
+	&__choose-container {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	&__choose-title {
+		font-weight: 500;
+		font-size: fluid(40px, 14px);
+		color: var(--brick);
+		max-width: 407px;
+		transition: transform var(--trans);
+
+		@include media("<=md") {
+			max-width: 70%;
+		}
+	}
+
+	&__choose-image {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 249px;
+		overflow: hidden;
+		z-index: 0;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: top;
+		}
+
+		@include media("<=md") {
+			height: 51px;
+
+			img {
+				height: 100%;
+				width: 121px;
+
+			}
+		}
+	}
+
+	&__choose-btn {
+		@include flex-center;
+
+		flex-direction: column;
+		width: 160px;
+		aspect-ratio: 1 / 1;
+		border-radius: 100%;
+		color: var(--sand);
+		text-align: center;
+		gap: 15px;
+		position: absolute;
+
+
+		svg {
+			width: 20px;
+			height: 20px;
+			fill: var(--sand);
+		}
+
+		img {
+			display: none;
+			width: 100%;
+			height: 100%;
+		}
+
+		@include media("<=md") {
+			width: 30px;
+
+			svg {
+				display: none;
+			}
+
+			span {
+				display: none;
+			}
+
+			img {
+				display: block;
+			}
+		}
+	}
+
+	&__bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+}

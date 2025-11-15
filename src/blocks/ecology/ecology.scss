@@ -1,0 +1,80 @@
+@use 'lib' as *;
+
+.ecology {
+	$self: &;
+
+	padding: fluid(150px, 80px) 0;
+	height: 300vh;
+
+	&__wrapper {
+		position: relative;
+		position: sticky;
+		top: fluid(150px, 80px);
+		overflow: hidden;
+	}
+
+	&__wrapper-container {
+	}
+
+	&__title {
+		line-height: 100%;
+		font-weight: 300;
+		color: var(--green);
+		font-size: fluid(70px, 30px);
+		text-transform: uppercase;
+		text-align: right;
+		margin-bottom: 129px;
+	}
+
+	&__columns {
+		display: grid;
+		grid-template-columns: minmax(auto, 785px) minmax(auto, 325px);
+		gap: 135px;
+
+		@include media("<=md") {
+			grid-template-columns: 100%;
+			gap: 60px;
+		}
+	}
+
+	&__image {
+		position: relative;
+	}
+
+	&__image-main {
+		aspect-ratio: 785 / 636;
+		object-fit: cover;
+		width: 100%;
+	}
+
+	&__image-stul {
+		width: 60%;
+		margin-top: -20%;
+		margin-left: -10%;
+	}
+
+	&__text {
+		color: var(--text-black);
+		font-weight: 300;
+		font-size: fluid(16px, 12px);
+		line-height: 160%;
+		margin-top: 318px;
+
+		@include media("<=md") {
+			margin-top: 0;
+		}
+	}
+
+	&__photo {
+		position: absolute;
+		top: 50%; left: 50%;
+		transform: translate(-50%, -50%);
+		overflow: hidden;
+
+		img {
+			width: 100%; height: 100%;
+			object-fit: cover;
+		}
+	}
+
+}

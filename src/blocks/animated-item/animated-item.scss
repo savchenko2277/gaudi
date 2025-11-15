@@ -1,0 +1,9 @@
+@use 'lib' as *;
+
+.animated-item {
+	$self: &;
+
+// 	will-change: opacity, transform;
+//   backface-visibility: hidden; /* иногда помогает */
+//   transform: translateZ(0); /* создаёт новый слой */
+}

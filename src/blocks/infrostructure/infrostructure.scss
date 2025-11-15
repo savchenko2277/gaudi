@@ -1,0 +1,239 @@
+@use 'lib' as *;
+
+.infrostructure {
+	$self: &;
+
+	background: var(--sea);
+	padding: fluid(150px, 60px) 0;
+	overflow: hidden;
+
+	&__container {}
+
+	&__title {
+		text-wrap: nowrap;
+		text-transform: uppercase;
+		font-weight: 300;
+		font-size: fluid(170px, 40px);
+		margin-bottom: 142px;
+		position: relative;
+		line-height: 100%;
+
+		img {
+			position: absolute;
+			height: fluid(491px, 211px);
+			top: calc(100% - 20px);
+			left: -2%;
+			animation: wave 2s infinite;
+			object-fit: contain;
+			width: fit-content;
+
+			@keyframes wave {
+				0% {
+					transform: rotate(0deg);
+				}
+
+				50% {
+					transform: rotate(-2deg);
+				}
+
+				100% {
+					transform: rotate(0deg);
+				}
+			}
+		}
+
+		@include media("<=xlg") {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 16px;
+
+			img {
+				position: static;
+				margin-top: -10px;
+			}
+		}
+	}
+
+	&__content {
+		display: grid;
+		grid-template-columns: 375px 1fr;
+		gap: 0px 92px;
+		position: relative;
+
+		@include media("<=xlg") {
+			grid-template-columns: 100%;
+			gap: 80px;
+		}
+	}
+
+	&__decor {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		z-index: 1;
+		font-size: 500px;
+		text-transform: uppercase;
+		font-weight: 300;
+		color: var(--sand);
+		line-height: 100%;
+		width: fluid(375px, 150px);
+		height: fit-content;
+
+		img {
+			width: 100%;
+			object-fit: contain;
+		}
+	}
+
+	&__text {
+		@include media(">xlg") {
+			grid-column: 2 / span 1;
+		}
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		line-height: 160%;
+		font-size: fluid(16px, 12px);
+		font-weight: 300;
+		max-width: 325px;
+		margin-bottom: 200px;
+
+		@include media("<=xlg") {
+			padding-left: 84px;
+			max-width: none;
+		}
+	}
+
+	&__projects {
+		@include media(">xlg") {
+			grid-column: 2 / span 1;
+		}
+
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: fluid(40px, 10px);
+
+		@include media("<=xlg") {
+			overflow-x: auto;
+			grid-template-columns: repeat(2, auto);
+		}
+	}
+
+	&__projects-column {
+		display: flex;
+		flex-direction: column;
+		gap: fluid(40px, 10px);
+
+		&:nth-child(2) {
+			margin-top: -247px;
+
+			@include media("<=xlg") {
+				margin-top: 0;
+			}
+		}
+
+		@include media("<=xlg") {
+			flex-direction: row;
+			flex-wrap: nowrap;
+			width: fit-content;
+		}
+	}
+
+	&__project {
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: end;
+		padding: fluid(60px, 30px) fluid(40px, 24px);
+
+		&:hover {
+			#{$self}__project-title {
+				opacity: 0;
+			}
+
+			#{$self}__project-plus {
+				opacity: 0;
+			}
+
+			#{$self}__project-after {
+				border-radius: 0;
+				opacity: 1;
+				scale: 1;
+			}
+		}
+
+		@include media("<=xlg") {
+			width: 273px;
+		}
+	}
+
+	&__project-title {
+		position: relative;
+		z-index: 1;
+		transition: all var(--trans);
+		font-weight: 500;
+		font-size: fluid(20px, 16px);
+		text-transform: uppercase;
+	}
+
+	&__project-image {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		overflow: hidden;
+		transition: all var(--trans);
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: #000000;
+			opacity: var(--opacity);
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			scale: 1.5;
+		}
+	}
+
+	&__project-plus {
+		@include flex-center;
+		width: fluid(50px, 36px);
+		height: fluid(50px, 36px);
+		border-radius: 100%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+		background: var(--sand);
+		transition: all var(--trans);
+
+		svg {
+			width: fluid(20px, 14px);
+			height: fluid(20px, 14px);
+			fill: var(--sea);
+		}
+	}
+
+	&__project-after {
+		@include flex-center;
+		padding: 40px;
+		position: absolute;
+		inset: 0;
+		z-index: 3;
+		background: #000000CC;
+		font-size: 16px;
+		line-height: 140%;
+		border-radius: 100%;
+		scale: 0.8;
+		opacity: 0;
+		transition: all var(--trans);
+	}
+
+}

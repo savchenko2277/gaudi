@@ -1,0 +1,154 @@
+@use 'lib' as *;
+
+.architecture {
+	$self: &;
+
+	padding-top: fluid(100px, 60px);
+	padding-bottom: fluid(100px, 80px);
+	font-family: "Montserrat", sans-serif;
+
+	&__container {
+		display: grid;
+		grid-template-columns: repeat(2, auto);
+		grid-template-rows: repeat(3, auto);
+		justify-content: start;
+		gap: 0px 40px;
+
+		@include media("<=lg") {
+			grid-template-columns: 100%;
+			gap: 40px;
+		}
+	}
+
+	&__title {
+		@include media(">lg") {
+			grid-row: 2 / span 1;
+			grid-column: 2 / span 1;
+		}
+
+		font-size: fluid(80px, 60px);
+		color: var(--brick);
+		text-transform: uppercase;
+		font-weight: 300;
+		height: fit-content;
+		padding: 60px 0px;
+		word-break: normal;
+		hyphens: auto;
+	}
+
+	&__image {
+
+		@include media(">lg") {
+			grid-row: 1 / span 3;
+			grid-column: 1 / span 1;
+			padding-right: 40px;
+			border-right: .5px solid #9A9A9A;
+		}
+
+		height: 100%;
+
+		img {
+			aspect-ratio: 544 / 723;
+			height: 100%;
+			max-height: fit-content;
+			width: auto;
+			object-fit: cover;
+		}
+	}
+
+	&__desc {
+		@include media(">lg") {
+			padding-right: 40px;
+			border-right: .5px solid #9A9A9A;
+			max-width: 388px;
+		}
+
+		color: var(--text-black);
+		font-weight: 300;
+		line-height: 160%;
+	}
+
+	&__image-second {
+		img {
+			max-width: 252px;
+			min-width: 252px;
+			aspect-ratio: 252 / 323;
+			border-radius: 100%;
+		}
+
+		@include media("<=xs") {
+			align-self: center;
+		}
+	}
+
+	&__block {
+		@include media(">lg") {
+			grid-row: 1 / span 1;
+			grid-column: 2 / span 1;
+		}
+
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		height: fit-content;
+		gap: 70px;
+
+		@include media("<=xs") {
+			flex-direction: column;
+			gap: 40px;
+		}
+	}
+
+	&__block-second {
+		@include media(">lg") {
+			grid-column: 2 / span 1;
+			grid-row: 3 / span 1;
+		}
+
+		display: flex;
+		flex-direction: row-reverse;
+		gap: 22px;
+
+		@include media("<=xs") {
+			flex-direction: column;
+			gap: 40px;
+		}
+	}
+
+	&__desc-second {
+		max-width: 464px;
+		color: var(--text-black);
+		text-align: right;
+		font-weight: 300;
+		line-height: 160%;
+
+		@include media("<=xs") {
+			text-align: start;
+		}
+	}
+
+	&__btn {
+		@include flex-center;
+		width: fluid(200px, 120px);
+		height: fluid(200px, 120px);
+		border-radius: 100%;
+		background: var(--brick);
+		flex-direction: column;
+		text-align: center;
+		font-size: fluid(20px, 14px);
+		font-weight: 500;
+		gap: 20px;
+		flex: 0 0 auto;
+
+		svg {
+			width: fluid(32px, 18px);
+			height: fluid(32px, 18px);
+			fill: var(--sand);
+		}
+
+		@include media("<=xs") {
+			align-self: center;
+		}
+	}
+
+}

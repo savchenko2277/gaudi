@@ -1,0 +1,142 @@
+@use 'lib' as *;
+
+.estetic {
+	$self: &;
+
+	background: var(--sand);
+	overflow: hidden;
+
+	&__block {
+		position: relative;
+		&:nth-child(1) {
+			padding: fluid(150px, 60px) 0;
+		}
+	}
+
+	&__title {
+		color: var(--brick);
+		display: flex;
+		flex-direction: column;
+		text-transform: uppercase;
+		font-size: fluid(170px, 40px);
+		line-height: 100%;
+		font-weight: 300;
+		width: fit-content;
+
+		span {
+			display: block;
+			text-align: right;
+		}
+	}
+
+	&__gallery {
+		position: relative;
+		height: 860px;
+		padding: 60px 0px;
+		display: flex;
+		flex-direction: column;
+		justify-content: end;
+
+		@include media("<=xs") {
+			height: 100svh;
+		}
+	}
+
+	&__gallery-current {
+		position: absolute;
+		inset: 0;
+		object-fit: cover;
+		z-index: 0;
+		pointer-events: none;
+		opacity: 0;
+		transition: all var(--trans);
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+
+		&.active {
+			opacity: 1;
+		}
+	}
+
+	&__gallery-navigation {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		max-width: 1280px;
+		width: 100%;
+		z-index: 1;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 15px;
+	}
+
+	&__navigation-button {
+		@include flex-center;
+		width: 50px;
+		height: 50px;
+		border-radius: 100%;
+		border: 1px solid var(--sand);
+		cursor: pointer;
+		transition: all var(--trans);
+
+		svg {
+			width: 30px;
+			height: 24px;
+			stroke: var(--sand);
+			transition: all var(--trans);
+			fill: transparent;
+		}
+
+		&:hover {
+			background: var(--sand);
+
+			svg {
+				stroke: var(--brick);
+			}
+		}
+	}
+
+	&__navigation-button-prev {}
+
+	&__navigation-button-next {}
+
+	&__gallery-images {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+	}
+
+	&__gallery-image {
+		height: fluid(130px, 46px);
+		flex: 1 1 auto;
+		cursor: pointer;
+		width: 100%;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		&.hidden {
+			display: none;
+		}
+	}
+
+	&__decor {
+		position: absolute;
+		top: 0; right: -10%;
+		width: fluid(600px, 270px);
+
+		@include media("<=xs") {
+			right: -40%;
+		}
+	}
+
+}

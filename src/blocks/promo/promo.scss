@@ -1,0 +1,168 @@
+@use 'lib' as *;
+
+.promo {
+	$self: &;
+
+	height: 300svh;
+	position: relative;
+
+	&__absolute-container {
+		position: absolute;
+		inset: 0;
+		z-index: 4;
+	}
+
+	&__wrapper {
+		height: 100svh;
+		position: sticky;
+		top: 0;
+		overflow: hidden;
+	}
+
+	&__circle {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		aspect-ratio: 1 / 1;
+		z-index: 2;
+		overflow: hidden;
+		width: auto;
+
+		img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 100vw;
+			height: 100svh;
+			object-fit: cover;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: #000000;
+			opacity: var(--after-opacity, 0);
+		}
+	}
+
+	&__block {
+		position: absolute;
+		inset: 0;
+		height: 100svh;
+		width: 100%;
+
+		&_first {
+			padding-top: 225px;
+			z-index: 1;
+		}
+
+		&_second {
+			padding-top: 136px;
+			z-index: 3;
+		}
+	}
+
+	&__arrow {
+		position: absolute;
+		bottom: 80px;
+		right: 0;
+		width: fluid(80px, 50px);
+		height: fluid(80px, 50px);
+		animation: arrow 1s infinite;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
+	}
+
+	&__block-container {
+		position: relative;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__block_second {
+		#{$self}__block-bg {
+			&::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: rgba($color: #000000, $alpha: 0.4);
+			}
+		}
+
+		#{$self}__desc {
+			max-width: 481px;
+			font-size: fluid(16px, 14px);
+		}
+	}
+
+	&__block_first {
+		#{$self}__block-bg {
+			&::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: rgba($color: #000000, $alpha: 0.6);
+			}
+		}
+
+		#{$self}__desc {
+			margin-left: 12%;
+			max-width: 426px;
+
+			@include media("<=xs") {
+				margin-left: 30px;
+			}
+		}
+	}
+
+	&__title {
+		font-size: fluid(100px, 40px);
+		max-width: 909px;
+		font-weight: 300;
+		margin-bottom: fluid(47px, 163px);
+		align-self: center;
+	}
+
+	&__logo {
+		width: 100%;
+		margin-bottom: 178px;
+
+		img {
+			width: 100%;
+			object-fit: contain;
+		}
+
+		@include media("<=xs") {
+			margin-bottom: 283px;
+		}
+	}
+
+	&__desc {
+		font-size: 18px;
+		line-height: 160%;
+		text-transform: uppercase;
+	}
+
+	&__block-bg {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&__arrow {}
+
+}

@@ -1,0 +1,25 @@
+$matches: (
+	xxxxlg: 1920,
+	xxxlg: 1680,
+	xxlg: 1440,
+	xlg: 1280,
+	lg: 1100,
+	md: 960,
+	sm: 780,
+	xs: 640,
+	xxs: 480,
+	xxxs: 360
+);
+
+:root {
+	--size: 16px;
+	--container: 1400px;
+
+	// -- Colors -- //
+	--brick: #875041;
+	--green: #374532;
+	--sand: #F8F0E5;
+	--sea: #374855;
+	--trans: 0.5s ease-out;
+	--text-black: #4E4E4E; 
+}
