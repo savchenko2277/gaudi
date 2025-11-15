@@ -35,7 +35,7 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 			width: 100vw;
-			height: 100svh;
+			height: 100%;
 			object-fit: cover;
 		}
 
@@ -55,12 +55,12 @@
 		width: 100%;
 
 		&_first {
-			padding-top: 225px;
+			padding-top: fluid(225px, 167px);
 			z-index: 1;
 		}
 
 		&_second {
-			padding-top: 136px;
+			padding-top: fluid(136px, 60px);
 			z-index: 3;
 		}
 	}
@@ -112,14 +112,24 @@
 				background: rgba($color: #000000, $alpha: 0.6);
 			}
 		}
+	}
 
-		#{$self}__desc {
-			margin-left: 12%;
-			max-width: 426px;
+	&__desc_first {
+		position: absolute;
+		left: 25%;
+		bottom: 123px;
+		max-width: 426px;
+		z-index: 3;
 
-			@include media("<=xs") {
-				margin-left: 30px;
-			}
+		@include media("<=md") {
+			position: absolute;
+			bottom: 20%;
+			left: 44px;
+			padding-right: 15px;
+		}
+
+		@include media("<=xs") {
+			margin-left: 30px;
 		}
 	}
 

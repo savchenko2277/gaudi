@@ -7,7 +7,7 @@ import Lenis from 'lenis'
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Swiper from "swiper";
-import { Navigation } from "swiper/modules";
+import { Navigation, EffectFade } from "swiper/modules";
 
 // Функции
 
@@ -31,6 +31,21 @@ const setHeader = () => {
 	if (!header) return;
 
 	const burger = header.querySelector('.header__burger');
+
+	let lastScrollY = 0;
+
+	window.addEventListener('scroll', () => {
+		const scrollY = window.scrollY;
+		const delta = scrollY - lastScrollY;
+
+		if (scrollY > 50 && delta > 0) {
+			header.classList.add('is-scroll');
+		} else {
+			header.classList.remove('is-scroll');
+		}
+
+		lastScrollY = scrollY;
+	});
 
 	burger?.addEventListener('click', () => {
 		header.classList.toggle('is-open');
@@ -58,15 +73,17 @@ const setBlockAnimation = () => {
 			gsap.fromTo(".promo__circle",
 				{
 					"--after-opacity": 0,
-					opacity: 0,
 					width: "20%",
 					borderRadius: "100%",
+					y: "-20%",
+					x: "-50%",
 				},
 				{
 					"--after-opacity": 0.4,
-					opacity: 1,
 					width: "100%",
 					borderRadius: "0%",
+					y: "-50%",
+					x: "-50%",
 					ease: "none",
 					scrollTrigger: {
 						trigger: ".promo",
@@ -79,17 +96,47 @@ const setBlockAnimation = () => {
 					}
 				}
 			);
+			gsap.fromTo(".ecology__text",
+				{
+					y: "0%",
+				},
+				{
+					y: "-20%",
+					ease: "none",
+					scrollTrigger: {
+						trigger: ".ecology",
+						start: "0% top",
+						end: "30% top",
+						scrub: true
+					}
+				}
+			);
+			gsap.fromTo(".ecology__photo",
+				{
+					y: "-50%",
+					x: "-50%",
+				},
+				{
+					y: "-80%",
+					x: "-50%",
+					ease: "none",
+					scrollTrigger: {
+						trigger: ".ecology",
+						start: "0% top",
+						end: "30% top",
+						scrub: true
+					}
+				}
+			);
 		} else {
 			gsap.fromTo(".promo__circle",
 				{
 					"--after-opacity": 0,
-					opacity: 0,
-					height: "40%",
+					height: "35%",
 					borderRadius: "100%",
 				},
 				{
 					"--after-opacity": 0.4,
-					opacity: 1,
 					height: "100%",
 					borderRadius: "0%",
 					ease: "none",
@@ -104,7 +151,43 @@ const setBlockAnimation = () => {
 					}
 				}
 			);
+			gsap.fromTo(".ecology__photo",
+				{
+					y: "-120%",
+					x: "-50%",
+				},
+				{
+					y: "-150%",
+					x: "-50%",
+					ease: "none",
+					scrollTrigger: {
+						trigger: ".ecology",
+						start: "0% top",
+						end: "30% top",
+						scrub: true
+					}
+				}
+			);
 		}
+
+		gsap.fromTo(".promo__desc_first",
+			{
+				opacity: 1,
+			},
+			{
+				opacity: 0,
+				ease: "none",
+				scrollTrigger: {
+					trigger: ".promo",
+					start: "0% top",
+					end: "30% top",
+					scrub: true,
+				},
+				onComplete: () => {
+					// document.querySelector('.promo__circle').style.aspectRatio = "auto";
+				}
+			}
+		);
 
 		gsap.fromTo(".promo__block_second",
 			{ opacity: 0 },
@@ -172,42 +255,6 @@ const setBlockAnimation = () => {
 			}
 		);
 
-		gsap.fromTo(".location__block_second",
-			{ opacity: 0 },
-			{
-				opacity: 1,
-				ease: "none",
-				scrollTrigger: {
-					trigger: ".location",
-					start: "30% top",
-					end: "60% top",
-					scrub: true
-				}
-			}
-		);
-
-		gsap.fromTo(".ecology__photo",
-			{
-				opacity: 0,
-				borderRadius: "100%",
-				width: "30%",
-				height: "30%",
-			},
-			{
-				opacity: 1,
-				borderRadius: "0%",
-				width: "100%",
-				height: "100%",
-				ease: "none",
-				scrollTrigger: {
-					trigger: ".ecology",
-					start: "50% top",
-					end: "70% top",
-					scrub: true
-				}
-			}
-		);
-
 		gsap.fromTo('.ecology__title',
 			{
 				opacity: 0,
@@ -219,22 +266,24 @@ const setBlockAnimation = () => {
 				ease: "none",
 				scrollTrigger: {
 					trigger: ".ecology",
-					start: "0% top",
-					end: "40% top",
+					start: "-50% top",
+					end: "-20% top",
 					scrub: true
 				}
 			}
 		);
 
-		gsap.fromTo(".location-main__block_second",
-			{ opacity: 0 },
+		gsap.fromTo(".infrostructure__title",
 			{
-				opacity: 1,
+				x: "100%",
+			},
+			{
+				x: 0,
 				ease: "none",
 				scrollTrigger: {
-					trigger: ".location-main",
-					start: "30% top",
-					end: "60% top",
+					trigger: ".infrostructure",
+					start: "-50% top",
+					end: "0% top",
 					scrub: true
 				}
 			}
@@ -383,17 +432,17 @@ const setLocationSwipers = () => {
 			nextEl: '.location-main__about .location-main__navigation-btn_next',
 			prevEl: '.location-main__about .location-main__navigation-btn_prev',
 		},
-		on:{
-			slideChange: function() {
+		on: {
+			slideChange: function () {
 				const activeSlide = this.slides[this.activeIndex];
-				
+
 				const imageSrc = activeSlide.dataset.src;
 				const name = activeSlide.dataset.name;
 				const nameEl = document.querySelector('.location-main__name');
 				const image = document.querySelector('.location-main__location-image');
 
 				image.classList.remove('active');
-				
+
 				setTimeout(() => {
 					image.classList.add('active');
 				}, 100);
@@ -405,17 +454,21 @@ const setLocationSwipers = () => {
 	});
 
 	const roadSwiper = new Swiper('.location-main__road-swiper', {
-		modules: [Navigation],
+		modules: [Navigation, EffectFade],
 		slidesPerView: 1,
 		spaceBetween: 30,
+		effect: 'fade',
+		effectFade: {
+			crossFade: true
+		},
 		loop: true,
 		autoHeight: true,
 		navigation: {
 			nextEl: '.location-main__road .location-main__navigation-btn_next',
 			prevEl: '.location-main__road .location-main__navigation-btn_prev',
 		},
-		on:{
-			slideChange: function() {
+		on: {
+			slideChange: function () {
 
 			}
 		}

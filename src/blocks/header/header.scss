@@ -11,6 +11,22 @@
 	color: var(--sand);
 	z-index: 100;
 
+	&::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: rgba($color: #000000, $alpha: 0.3);
+		backdrop-filter: blur(5px);
+		opacity: 0;
+		transition: opacity var(--trans);
+	}
+
+	&.is-scroll {
+		&::after {
+			opacity: 1;
+		}
+	}
+
 	&.is-open {
 		#{$self}__menu {
 			opacity: 1;
@@ -39,6 +55,7 @@
 		justify-content: space-between;
 		position: relative;
 		z-index: 1;
+		border-bottom: .5px solid var(--sand);
 
 		@include media("<=xlg") {
 			justify-content: start;

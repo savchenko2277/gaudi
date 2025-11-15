@@ -3,22 +3,18 @@
 .location-main {
 	$self: &;
 
-	min-height: 1720px;
-	height: 300svh;
-
 	&__wrapper {
 		height: 100svh;
 		min-height: fit-content;
-		position: sticky;
 		overflow: hidden;
-		top: 0; left: 0;
 	}
 
 	&__block {
 
-		position: absolute;
+		position: relative;
 		min-height: fit-content;
-		height: 100svh;
+		height: 860px;
+		min-height: fit-content;
 		overflow: hidden;
 		inset: 0;
 		display: flex;
@@ -174,6 +170,15 @@
 		}
 	}
 
+	&__road-slide.swiper-slide {
+		opacity: 0 !important;
+		transition: opacity var(--trans);
+
+		&.swiper-slide-active {
+			opacity: 1 !important;
+		}
+	}
+
 	&__road-title {
 		display: flex;
 		flex-direction: row;
@@ -190,8 +195,7 @@
 
 		span {
 			line-height: 100%;
-			hyphens: auto;
-
+			font-weight: 300;
 		}
 		font-size: fluid(30px, 16px);
 		text-transform: uppercase;
@@ -200,7 +204,6 @@
 	&__road-container {
 		max-width: 544px;
 		overflow: visible;
-		margin-right: 200px;
 
 		@include media("<=xs") {
 			margin-right: 30px;
