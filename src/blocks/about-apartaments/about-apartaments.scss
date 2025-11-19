@@ -37,6 +37,7 @@
 		margin: 0;
 		width: 100%;
 		max-width: 100%;
+		margin-bottom: 80px;
 
 		@include media(">md") {
 			display: none;
