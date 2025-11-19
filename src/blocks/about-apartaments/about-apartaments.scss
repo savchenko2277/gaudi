@@ -92,8 +92,8 @@
 			#{$self}__card-image {
 				position: absolute;
 				width: fluid(330px, 184px);
-				bottom: 60px;
-				right: 60px;
+				bottom: fluid(60px, 15px);
+				right: fluid(60px, 15px);
 			}
 		}
 
