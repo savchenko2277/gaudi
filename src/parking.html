@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include("_head.html", {"id":"home"})
+
+<body @@if(this.id){id="@@id" }>
+
+
+    @@include("_header.html", {})
+
+    <main class="site-container">
+
+        <section data-header-color="brick" class="parking">
+            <div class="parking__container container">
+                <div class="parking__top">
+                    <a href="main.html" class="parking__btn">
+                        <div class="parking__btn-icon">
+                            <svg>
+                                <use xlink:href="#arrow-left"></use>
+                            </svg>
+                        </div>
+                        НАЗАД
+                    </a>
+                    <div class="parking__info">
+                        <div class="parking__info-icon">
+                            <img loading="lazy" src="./img/icons/answer.svg" alt="">
+                            <img loading="lazy" src="./img/icons/close.svg" alt="">
+                        </div>
+                        <div class="parking__info-pop">
+                            <div class="parking__info-item">
+                                <img loading="lazy" src="./img/icons/mast.svg" alt="">
+                                Масштабируйте
+                            </div>
+                            <div class="parking__info-item">
+                                <img loading="lazy" src="./img/icons/perem.svg" alt="">
+                                Перемещайте
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="parking__frame">
+
+                </div>
+            </div>
+        </section>
+
+        @@include("_footer.html")
+    </main>
+</body>
+
+@@include("_sprite.svg")
+
+<script src="js/common.js?v=0"></script>
+
+</html>

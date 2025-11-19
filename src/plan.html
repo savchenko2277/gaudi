@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include("_head.html", {"id":"home"})
+
+<body @@if(this.id){id="@@id" }>
+
+
+    @@include("_header.html", {})
+
+    <main class="site-container">
+
+        <section data-header-color="brick" style="background: var(--sand);" class="plan">
+
+        </section>
+
+        @@include("_footer.html")
+    </main>
+</body>
+
+@@include("_sprite.svg")
+
+<script src="js/common.js?v=0"></script>
+
+</html>

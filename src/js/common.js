@@ -7,7 +7,7 @@ import Lenis from 'lenis'
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Swiper from "swiper";
-import { Navigation, EffectFade } from "swiper/modules";
+import { Navigation, EffectFade, Pagination } from "swiper/modules";
 
 // Функции
 
@@ -31,25 +31,79 @@ const setHeader = () => {
 	if (!header) return;
 
 	const burger = header.querySelector('.header__burger');
+	const colorSections = Array.from(document.querySelectorAll('[data-header-color]'));
 
 	let lastScrollY = 0;
+
+	const clearHeaderMods = () => {
+		header.classList.forEach(cls => {
+			if (cls.startsWith('header_')) {
+				header.classList.remove(cls);
+			}
+		});
+	};
+
+	const applyHeaderColorFromSections = () => {
+		if (!colorSections.length) return;
+		if (header.classList.contains('is-open')) {
+			clearHeaderMods();
+			return;
+		}
+
+		const headerHeight = header.offsetHeight || 0;
+		let applied = false;
+
+		for (const section of colorSections) {
+			const rect = section.getBoundingClientRect();
+			const intersects = rect.top < headerHeight && rect.bottom > 0;
+
+			if (intersects) {
+				const color = section.dataset.headerColor?.trim();
+				clearHeaderMods();
+
+				if (color) {
+					header.classList.add(`header_${color}`);
+				}
+
+				applied = true;
+				break;
+			}
+		}
+
+		if (!applied) {
+			clearHeaderMods();
+		}
+	};
+
+	const syncHeaderColor = throttle(applyHeaderColorFromSections, 100);
 
 	window.addEventListener('scroll', () => {
 		const scrollY = window.scrollY;
 		const delta = scrollY - lastScrollY;
 
-		if (scrollY > 50 && delta > 0) {
-			header.classList.add('is-scroll');
-		} else {
-			header.classList.remove('is-scroll');
-		}
+		// if (scrollY > 50 && delta > 0) {
+		// 	header.classList.add('is-scroll');
+		// } else {
+		// 	header.classList.remove('is-scroll');
+		// }
 
 		lastScrollY = scrollY;
+
+		syncHeaderColor();
 	});
 
 	burger?.addEventListener('click', () => {
 		header.classList.toggle('is-open');
+
+		if (header.classList.contains('is-open')) {
+			clearHeaderMods();
+		} else {
+			syncHeaderColor();
+		}
 	});
+
+	window.addEventListener('resize', syncHeaderColor);
+	syncHeaderColor();
 }
 
 const setSmoothPageScroll = () => {
@@ -165,6 +219,24 @@ const setBlockAnimation = () => {
 						start: "0% top",
 						end: "30% top",
 						scrub: true
+					}
+				}
+			);
+			gsap.fromTo(".about-apartaments__title span",
+				{
+					x: 0
+				},
+				{
+					x: "-20%",
+					ease: "none",
+					scrollTrigger: {
+						trigger: ".about-apartaments",
+						start: "0% top",
+						end: "30% top",
+						scrub: true,
+					},
+					onComplete: () => {
+						// document.querySelector('.promo__circle').style.aspectRatio = "auto";
 					}
 				}
 			);
@@ -475,6 +547,110 @@ const setLocationSwipers = () => {
 	});
 }
 
+class AboutApartamentsAdaptive {
+	constructor(section) {
+		this.section = section;
+		this.cards = Array.from(section.querySelectorAll('.about-apartaments__card'));
+		this.cardOrigins = new Map();
+		this.cards.forEach(card => {
+			this.cardOrigins.set(card, {
+				parent: card.parentElement,
+				nextSibling: card.nextElementSibling
+			});
+		});
+
+		this.swiperEl = section.querySelector('[data-about-apartaments-swiper]');
+		this.wrapper = this.swiperEl?.querySelector('.about-apartaments__swiper-wrapper');
+		this.prevBtn = section.querySelector('[data-about-apartaments-nav="prev"]');
+		this.nextBtn = section.querySelector('[data-about-apartaments-nav="next"]');
+		this.paginationEl = section.querySelector('[data-about-apartaments-pagination]');
+
+		this.mediaQuery = window.matchMedia('(max-width: 960px)');
+		this.swiper = null;
+		this.handleMode = this.handleMode.bind(this);
+
+		if (!this.cards.length || !this.swiperEl || !this.wrapper) return;
+
+		this.handleMode(this.mediaQuery);
+
+		if (typeof this.mediaQuery.addEventListener === 'function') {
+			this.mediaQuery.addEventListener('change', this.handleMode);
+		} else if (typeof this.mediaQuery.addListener === 'function') {
+			this.mediaQuery.addListener(this.handleMode);
+		}
+	}
+
+	handleMode(event) {
+		const matches = typeof event?.matches === 'boolean' ? event.matches : this.mediaQuery.matches;
+
+		if (matches) {
+			this.enable();
+		} else {
+			this.disable();
+		}
+	}
+
+	enable() {
+		if (this.swiper) return;
+
+		this.cards.forEach(card => {
+			card.classList.add('swiper-slide');
+			card.removeAttribute('style');
+			this.wrapper.appendChild(card);
+		});
+
+		const navigation = (this.prevBtn && this.nextBtn) ? {
+			prevEl: this.prevBtn,
+			nextEl: this.nextBtn
+		} : undefined;
+
+		const pagination = this.paginationEl ? {
+			el: this.paginationEl,
+			type: 'fraction'
+		} : undefined;
+
+		this.swiper = new Swiper(this.swiperEl, {
+			modules: [Navigation, Pagination],
+			slidesPerView: 1,
+			spaceBetween: 20,
+			navigation,
+			pagination
+		});
+	}
+
+	disable() {
+		if (!this.swiper) return;
+
+		this.swiper.destroy(true, true);
+		this.swiper = null;
+
+		this.cards.forEach(card => {
+			card.classList.remove('swiper-slide', 'swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
+			card.removeAttribute('style');
+
+			const origin = this.cardOrigins.get(card);
+			if (!origin?.parent) return;
+
+			const reference = origin.nextSibling && origin.nextSibling.parentNode === origin.parent
+				? origin.nextSibling
+				: null;
+
+			origin.parent.insertBefore(card, reference);
+		});
+
+		if (this.paginationEl) {
+			this.paginationEl.innerHTML = '';
+		}
+	}
+}
+
+const setAboutApartamentsSwiper = () => {
+	const sections = document.querySelectorAll('.about-apartaments');
+	if (!sections.length) return;
+
+	sections.forEach(section => new AboutApartamentsAdaptive(section));
+};
+
 window.addEventListener("load", () => {
 	updateVH();
 	setScrollbarWidth();
@@ -484,6 +660,7 @@ window.addEventListener("load", () => {
 	setParallax();
 	setGallery();
 	setLocationSwipers();
+	setAboutApartamentsSwiper();
 
 	window.addEventListener("resize", throttle(setBlockAnimation, 200));
 });

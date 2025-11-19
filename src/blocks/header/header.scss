@@ -121,7 +121,118 @@
 		}
 	}
 
+	&__apart-link-icon {
+		position: absolute;
+		width: 30px;
+		height: 30px;
+	}
+
+	&__apart-link {
+		padding: 15px;
+		background: var(--sand);
+		font-size: 14px;
+		font-weight: 500;
+		text-transform: uppercase;
+		position: relative;
+		transition: opacity var(--trans);
+
+		&:hover {
+			opacity: 0.9;
+		}
+
+		&:nth-child(1) {
+			border-right: .5px solid #9A9A9A;
+
+			&::before {
+				content: '';
+				position: absolute;
+				top: -10px;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 35px;
+				height: 16px;
+				background: url("../img/icons/treug.svg") no-repeat center center / cover;
+			}
+
+			#{$self}__apart-link-icon {
+				top: 40%;
+				right: 10%;
+			}
+		}
+
+		&:nth-child(2) {
+			#{$self}__apart-link-icon {
+				bottom: 10%;
+				right: 10%;
+				z-index: 2;
+
+				&:before {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 300%;
+					height: 300%;
+					background: rgba($color: #875041, $alpha: 0.1);
+					border-radius: 100%;
+					z-index: 1;
+				}
+
+				&:after {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 500%;
+					height: 500%;
+					background: rgba($color: #875041, $alpha: 0.05);
+					border-radius: 100%;
+					z-index: 0;
+				}
+			}
+		}
+	}
+
+	&__apart-menu-content {
+		position: relative;
+		width: 300px;
+		height: 122px;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		color: var(--brick);
+	}
+
+	&__apart-menu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		padding-top: 35px;
+		overflow: hidden;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition: all var(--trans);
+	}
+
 	&__apart {
+		position: relative;
+
+		@include media("<=xlg") {
+			display: none;
+		}
+
+		&:hover {
+			#{$self}__apart-menu {
+				opacity: 1;
+				visibility: visible;
+				pointer-events: all;
+			}
+		}
+	}
+
+	&__apart-btn {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -141,18 +252,14 @@
 			transition: all var(--trans);
 		}
 
-		&:hover {
-			background: var(--brick);
-			color: var(--sand);
+		// &:hover {
+		// 	background: var(--brick);
+		// 	color: var(--sand);
 
-			svg {
-				fill: var(--sand);
-			}
-		}
-
-		@include media("<=xlg") {
-			display: none;
-		}
+		// 	svg {
+		// 		fill: var(--sand);
+		// 	}
+		// }
 	}
 
 	&__tel {
@@ -178,6 +285,16 @@
 			width: 100%;
 			height: auto;
 			object-fit: contain;
+		}
+
+		#{$self}__logo-img {
+			width: 100%;
+			height: auto;
+			object-fit: contain;
+		}
+
+		#{$self}__logo-img_brick {
+			display: none;
 		}
 
 		@include media("<=xlg") {
@@ -561,6 +678,136 @@
 
 		@include media("<=lg") {
 			display: none;
+		}
+	}
+
+	&.header_brick {
+		color: var(--brick);
+
+		#{$self}__container {
+			border-color: var(--brick);
+		}
+
+		#{$self}__burger-icon {
+			span {
+				background: var(--brick);
+			}
+		}
+
+		#{$self}__burger-text {
+			color: var(--brick);
+		}
+
+		#{$self}__apart-btn {
+			background: var(--brick);
+			color: var(--sand);
+			border: 1px solid var(--brick);
+
+			svg {
+				fill: var(--sand);
+			}
+
+			&:hover {
+				background: transparent;
+				color: var(--brick);
+
+				svg {
+					fill: var(--brick);
+				}
+			}
+		}
+
+		#{$self}__socials {
+			border-color: var(--brick);
+		}
+
+		#{$self}__socials-item {
+			background: var(--brick);
+			border-radius: 50%;
+
+			img {
+				filter: none;
+			}
+
+			&:hover {
+				background: transparent;
+				box-shadow: inset 0 0 0 1px var(--brick);
+			}
+		}
+
+		#{$self}__tel,
+		#{$self}__adreess {
+			color: var(--brick);
+
+			&:hover {
+				color: var(--brick);
+				opacity: 0.8;
+			}
+		}
+
+		#{$self}__like {
+			border: 1px solid var(--brick);
+			background: transparent;
+
+			svg {
+				fill: var(--brick);
+			}
+
+			&:hover {
+				background: var(--brick);
+
+				svg {
+					fill: var(--sand);
+				}
+			}
+		}
+
+		#{$self}__logo {
+			#{$self}__logo-img_default {
+				display: none;
+			}
+
+			#{$self}__logo-img_brick {
+				display: block;
+			}
+		}
+	}
+
+	&.header_blue {
+
+		#{$self}__apart-btn {
+			color: var(--sea);
+
+			svg {
+				fill: var(--sea);
+			}
+		}
+
+		#{$self}__like {
+			border: 1px solid var(--sand);
+			background: var(--sand);
+
+			svg {
+				fill: var(--sea);
+			}
+
+			&:hover {
+				background: var(--sea);
+
+				svg {
+					fill: var(--sand);
+				}
+			}
+		}
+
+		#{$self}__logo {
+			#{$self}__logo-img_default {
+				display: block;
+			}
+
+			#{$self}__logo-img_brick {
+				display: none;
+			}
 		}
 	}
 

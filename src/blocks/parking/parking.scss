@@ -1,0 +1,57 @@
+@use 'lib' as *;
+
+.parking {
+	$self: &;
+
+	padding-top: fluid(180px, 110px);
+	background: var(--sand);
+
+	&__container {}
+
+	&__top {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__btn {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 20px;
+		font-size: fluid(16px, 14px);
+		color: var(--brick);
+		text-transform: uppercase;
+	}
+
+	&__btn-icon {
+		@include flex-center;
+		width: 50px;
+		height: 50px;
+		border-radius: 100%;
+		border: 1px solid var(--brick);
+
+		svg {
+			width: 30px;
+			height: 24px;
+			stroke: var(--brick);
+			fill: transparent;
+		}
+	}
+
+	&__info {
+		@include media(">lg") {
+			display: none;
+		}
+	}
+
+	&__info-icon {}
+
+	&__info-pop {}
+
+	&__info-item {}
+
+	&__frame {}
+
+}

@@ -1,0 +1,270 @@
+@use 'lib' as *;
+
+.about-apartaments {
+	$self: &;
+
+	background: var(--sea);
+	padding-top: 210px;
+	padding-bottom: fluid(150px, 80px);
+	overflow: hidden;
+
+	@include media("<=md") {
+		padding-top: 304px;
+	}
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	&__title {
+		font-size: fluid(100px, 40px);
+		text-transform: uppercase;
+		font-weight: 300;
+		padding-bottom: 40px;
+		border-bottom: .5px solid var(--sand);
+		margin-bottom: 40px;
+		min-width: 100%;
+		max-width: 100%;
+		text-wrap: nowrap;
+		display: flex;
+		align-items: start;
+		justify-content: start;
+	}
+
+	&__swiper.swiper {
+		margin: 0;
+		width: 100%;
+		max-width: 100%;
+
+		@include media(">md") {
+			display: none;
+		}
+
+		.swiper-wrapper {
+			margin-bottom: 20px;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+		margin-bottom: fluid(184px, 80px);
+
+		@include media("<=md") {
+			display: none;
+		}
+	}
+
+	&__block {
+		display: grid;
+		gap: 40px;
+
+		&:nth-child(1) {
+			grid-template-columns: 1fr minmax(auto, 427px);
+			padding-bottom: 40px;
+			border-bottom: .5px solid var(--sand);
+		}
+
+		&:nth-child(2) {
+			grid-template-columns: minmax(auto, 427px) 1fr;
+		}
+	}
+
+	&__card {
+
+		position: relative;
+
+		&_security {
+			padding: 60px fluid(60px, 20px) 0 fluid(60px, 20px);
+			background: var(--green);
+			padding-bottom: fluid(324px, 146px);
+
+			#{$self}__card-title {
+				font-size: fluid(40px, 16px);
+				text-transform: uppercase;
+				font-weight: 300;
+				margin-bottom: fluid(60px, 40px);
+			}
+
+			#{$self}__card-image {
+				position: absolute;
+				width: fluid(330px, 184px);
+				bottom: 60px;
+				right: 60px;
+			}
+		}
+
+		&_interior {
+			background: #D2DBE2;
+			color: var(--sea);
+			padding: fluid(60px, 40px);
+
+			#{$self}__card-title {
+				font-size: fluid(40px, 16px);
+				text-transform: uppercase;
+				font-weight: 500;
+				margin-bottom: fluid(60px, 40px);
+			}
+
+			#{$self}__card-image {
+				position: absolute;
+				width: 652px;
+				max-width: 100%;
+				bottom: -84.5px;
+				left: -36px;
+
+				@include media("<=md") {
+					left: -22px; 
+					bottom: 0;
+				}
+			}
+		}
+
+		&_small {
+			padding: 40px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			flex: 1 1 auto;
+
+
+			#{$self}__card-title {
+				display: flex;
+				flex-direction: row;
+				align-items: start;
+				gap: 20px;
+				font-size: 30px;
+				text-transform: uppercase;
+				font-weight: 300;
+				font-weight: 400;
+
+				b {
+					font-size: fluid(100px, 70px);
+					line-height: 80%;
+				}
+			}
+		}
+
+		&_sand {
+			color: var(--sea);
+			background: var(--sand);
+		}
+
+		&_brick {
+			color: var(--sand);
+			background: var(--brick);
+		}
+
+		@include media("<=xs") {
+			min-height: 380px;
+		}
+
+		&.swiper-slide {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+	}
+
+	&__card-title {}
+
+	&__card-text {
+		font-weight: 300;
+		line-height: 160%;
+		font-size: fluid(16px, 12px);
+	}
+
+	&__card-image {}
+
+	&__cards {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+		padding-left: 40px;
+		border-left: .5px solid var(--sand);
+		height: 100%;
+	}
+
+	&__image {
+		padding-right: 40px;
+		border-right: .5px solid var(--sand);
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 100%;
+			overflow: hidden;
+		}
+	}
+
+	&__buy {
+		@include flex-center;
+		flex-direction: column;
+		gap: fluid(20px, 10px);
+		border-radius: 50%;
+		text-align: center;
+		width: fluid(200px, 120px);
+		height: fluid(200px, 120px);
+		background: var(--sand);
+		color: var(--sea);
+		padding: 14px;
+		font-size: fluid(20px, 14px);
+
+		svg {
+			width: fluid(32px, 18px);
+			height: fluid(32px, 18px);
+			fill: var(--sea);
+		}
+	}
+
+	&__navigation-btn {
+		@include flex-center;
+		border-radius: 50%;
+		width: 36px;
+		height: 36px;
+		border: 1px solid var(--sand);
+		transition: all var(--trans);
+		background: var(--sand);
+
+		svg {
+			width: 22px;
+			height: 18px;
+			stroke: var(--sea);
+			fill: transparent;
+			transition: all var(--trans);
+		}
+
+		&:disabled {
+			background: transparent;
+
+			svg {
+				stroke: var(--sand);
+			}
+		}
+	}
+
+	&__navigation {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 5px;
+	}
+
+	&__pagination {
+		font-size: 14px;
+		color: var(--sand);
+	}
+
+	&__bottom {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+}

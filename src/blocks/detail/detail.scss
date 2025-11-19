@@ -1,0 +1,245 @@
+@use 'lib' as *;
+
+.detail {
+	$self: &;
+
+	position: relative;
+	padding-top: fluid(220px, 110px);
+
+	&__container {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1fr minmax(auto, 583px);
+		z-index: 1;
+		gap: 77px;
+
+		@include media("<=md") {
+			grid-template-columns: 100%;
+			gap: 0;
+		}
+	}
+
+	&__info {
+		display: grid;
+		grid-template-columns: 100%;
+		margin-bottom: 80px;
+
+		@include media("<=xs") {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	&__btn {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 20px;
+		font-size: fluid(16px, 14px);
+		margin-bottom: fluid(80px, 50px);
+
+		@include media("<=xs") {
+			grid-column: span 2;
+		}
+	}
+
+	&__btn-icon {
+		@include flex-center;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		border: 1px solid var(--sand);
+
+		svg {
+			width: 30px;
+			height: 24px;
+			fill: transparent;
+			stroke: var(--sand);
+		}
+	}
+
+	&__title {
+		font-size: fluid(80px, 40px);
+		font-weight: 300;
+		line-height: 100%;
+		padding-bottom: fluid(40px, 20px);
+		border-bottom: .5px solid var(--sand);
+		margin-bottom: fluid(40px, 20px);
+
+		@include media("<=xs") {
+			grid-column: span 2;
+		}
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: fluid(30px, 10px);
+		margin-bottom: 80px;
+
+		@include media("<=xs") {
+			margin-bottom: 0;
+		}
+	}
+
+	&__list-item {
+		font-weight: 600;
+		font-size: fluid(20px, 14px);
+		text-transform: uppercase;
+	}
+
+	&__price {
+		font-size: fluid(40px, 18px);
+		font-weight: 500;
+
+		@include media("<=xs") {
+			display: flex;
+			align-items: end;
+			justify-content: end;
+		}
+	}
+
+	&__scheme {
+		padding: fluid(40px, 20px);
+		background: var(--sand);
+		margin-bottom: -110px;
+		position: relative;
+
+		@include media("<=xs") {
+			margin-bottom: -164px;
+		}
+
+		@include media("<=xlg") {
+			padding-bottom: 110px;
+		}
+	}
+
+	&__buy {
+		@include flex-center;
+
+		position: absolute;
+		right: calc(100% + 132px);
+		bottom: 217px;
+		width: fluid(160px, 120px); height: fluid(160px, 120px);
+		border-radius: 50%;
+		background: var(--brick);
+		color: var(--sand);
+		text-align: center;
+		flex-direction: column;
+		gap: fluid(20px, 10px);
+		transition: all var(--trans);
+		font-size: fluid(16px, 14px);
+
+		svg {
+			width: fluid(20px, 18px); height: fluid(20px, 18px);
+			fill: var(--sand);
+			transition: all var(--trans);
+		}
+
+		&:hover {
+			background: var(--sand);
+			color: var(--brick);
+			svg {
+				fill: var(--brick);
+			}
+		}
+
+		@include media("<=xlg") {
+			bottom: -60px; right: 50%;
+			transform: translateX(50%);
+		}
+	}
+
+	&__scheme-top {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: fluid(165px, 80px);
+	}
+
+	&__scheme-like {
+		@include flex-center;
+		width: fluid(50px, 30px);
+		height: fluid(50px, 30px);
+		border-radius: 50%;
+		border: 1px solid var(--brick);
+
+		svg {
+			width: fluid(26px, 18px);
+			height: fluid(24px, 16px);
+			fill: var(--brick);
+		}
+	}
+
+	&__scheme-download {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 20px;
+		font-size: fluid(16px, 14px);
+		color: var(--brick);
+		text-transform: uppercase;
+	}
+
+	&__scheme-download-icon {
+		@include flex-center;
+		width: fluid(50px, 30px);
+		height: fluid(50px, 30px);
+
+	}
+
+	&__scheme-item {
+		width: 100%;
+		margin-bottom: fluid(92px, 80px);
+	}
+
+	&__scheme-bottom {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+
+		@include media("<=xs") {
+			grid-template-columns: 100%;
+		}
+	}
+
+	&__scheme-info {
+		color: var(--brick);
+		font-size: fluid(30px, 16px);
+		display: flex;
+		flex-direction: row;
+		align-items: start;
+		gap: 20px;
+
+		b {
+			font-size: fluid(100px, 70px);
+			line-height: 100%;
+		}
+
+		@include media("<=xs") {
+			margin: 0 auto;
+			margin-bottom: 80px;
+		}
+	}
+
+	&__scheme-plane {}
+
+	&__bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: #00000066;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+}

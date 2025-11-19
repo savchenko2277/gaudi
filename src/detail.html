@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+@@include("_head.html", {"id":"home"})
+
+<body @@if(this.id){id="@@id" }>
+
+
+    @@include("_header-choose.html", {})
+
+    <main class="site-container">
+
+        <section data-header-color="blue" class="detail">
+            <div class="detail__container container">
+                <div class="detail__info">
+                    <a href="#" class="detail__btn">
+                        <div class="detail__btn-icon">
+                            <svg>
+                                <use xlink:href="#arrow-left"></use>
+                            </svg>
+                        </div>
+                        НАЗАД
+                    </a>
+                    <h2 class="detail__title title">№217</h2>
+                    <ul class="detail__list">
+                        <li class="detail__list-item">S - 44,37 м2</li>
+                        <li class="detail__list-item">Кол-во комнат - 2</li>
+                        <li class="detail__list-item">Этаж - 2</li>
+                    </ul>
+                    <p class="detail__price title">7 535 900 ₽</p>
+                </div>
+                <div class="detail__scheme">
+                    <div class="detail__scheme-top">
+                        <a href="#" class="detail__scheme-like">
+                            <svg>
+                                <use xlink:href="#heart"></use>
+                            </svg>
+                        </a>
+                        <a href="#" class="detail__scheme-download">
+                            <img loading="lazy" src="./img/icons/download.svg" class="detail__scheme-download-icon">
+                            СКАЧАТЬ PDF
+                        </a>
+                    </div>
+                    <img loading="lazy" src="./img/scheme.svg" alt="" class="detail__scheme-item">
+                    <div class="detail__scheme-bottom">
+                        <div class="detail__scheme-info">
+                            <b>2</b>этаж
+                        </div>
+                        <img loading="lazy" src="./img/plane.webp" alt="" class="detail__scheme-plane">
+                    </div>
+                    <a href="#" class="detail__buy">
+                        Купить апартаменты
+                        <svg>
+                            <use xlink:href="#key"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="detail__bg">
+                <img loading="lazy" src="./img/apartaments/bg.webp" alt="">
+            </div>
+        </section>
+
+        <section class="about-apartaments">
+            <div class="about-apartaments__container container">
+                <h2 class="about-apartaments__title title">
+                    <span>Об апартаментах</span>
+                </h2>
+                <div class="about-apartaments__content" data-about-apartaments-slider>
+                    <div class="about-apartaments__block">
+                        <div class="about-apartaments__card about-apartaments__card_security" data-about-apartaments-slide>
+                            <h4 class="about-apartaments__card-title">БЕЗОПАСНОСТЬ</h4>
+                            <p class="about-apartaments__card-text">
+                                В Гуди самые современные системы безопасности. Закрытая территория, камеры
+                                видеонаблюдения во дворе, общественных пространствах, входных группах и коридорах. У
+                                всех жителей будет доступ к архивам видеозаписей. Контроль доступа на территорию с
+                                помощью биометрии.
+                            </p>
+                            <img loading="lazy" src="./img/camera.webp" alt="" class="about-apartaments__card-image">
+                        </div>
+                        <div class="about-apartaments__cards">
+                            <div class="about-apartaments__card about-apartaments__card_small about-apartaments__card_sand"
+                                data-about-apartaments-slide>
+                                <h4 class="about-apartaments__card-title"><b>3</b>м</h4>
+                                <p class="about-apartaments__card-text">
+                                   Высокие потолки создают ощущение простора и свободы
+                                </p>
+                            </div>
+                            <div class="about-apartaments__card about-apartaments__card_small about-apartaments__card_brick"
+                                data-about-apartaments-slide>
+                                <h4 class="about-apartaments__card-title"><b>47</b>дБ</h4>
+                                <p class="about-apartaments__card-text">
+                                   Высокий индекс шумоизоляции
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-apartaments__block">
+                        <div class="about-apartaments__image">
+                            <img loading="lazy" src="./img/about-apartaments.webp" alt="">
+                        </div>
+                        <div class="about-apartaments__card about-apartaments__card_interior" data-about-apartaments-slide>
+                            <h4 class="about-apartaments__card-title">ДИЗАЙНЕРСКИЕ ИНТЕРЬЕРЫ СОЗДАЮТ ТЕПЛОТУ И УЮТ</h4>
+                            <img loading="lazy" src="./img/divan.webp" alt="" class="about-apartaments__card-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="about-apartaments__swiper swiper" data-about-apartaments-swiper>
+                    <div class="about-apartaments__swiper-wrapper swiper-wrapper"></div>
+                    <div class="about-apartaments__bottom">
+                        <div class="about-apartaments__navigation">
+                            <button type="button" class="about-apartaments__navigation-btn about-apartaments__navigation-btn_prev"
+                                data-about-apartaments-nav="prev">
+                                <svg>
+                                    <use xlink:href="#arrow-left"></use>
+                                </svg>
+                            </button>
+                            <button type="button" class="about-apartaments__navigation-btn about-apartaments__navigation-btn_next"
+                                data-about-apartaments-nav="next">
+                                <svg>
+                                    <use xlink:href="#arrow-right"></use>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="about-apartaments__pagination swiper-pagination"
+                            data-about-apartaments-pagination></div>
+                    </div>
+                </div>
+                <a href="#" class="about-apartaments__buy">
+                    Назад к апартаментам
+                    <svg><use xlink:href="#key"></use></svg>
+                </a>
+            </div>
+        </section>
+
+        @@include("_footer.html")
+    </main>
+</body>
+
+@@include("_sprite.svg")
+
+<script src="js/common.js?v=0"></script>
+
+</html>
