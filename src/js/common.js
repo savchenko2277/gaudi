@@ -651,6 +651,40 @@ const setAboutApartamentsSwiper = () => {
 	sections.forEach(section => new AboutApartamentsAdaptive(section));
 };
 
+const setClassOnClick = () => {
+	const elements = document.querySelectorAll('[data-section-click]');
+	if (!elements.length) return;
+
+	const handlers = [];
+
+	elements.forEach(element => {
+		const trigger = element.querySelector('[data-item-click]');
+		if (!trigger) return;
+
+		const className = trigger.dataset.itemClick?.trim();
+		if (!className) return;
+
+		const toggle = (event) => {
+			event.preventDefault();
+			event.stopPropagation();
+			element.classList.toggle(className);
+		};
+
+		trigger.addEventListener('click', toggle);
+		handlers.push({ element, className });
+	});
+
+	if (!handlers.length) return;
+
+	document.addEventListener('click', (event) => {
+		handlers.forEach(({ element, className }) => {
+			if (!element.contains(event.target)) {
+				element.classList.remove(className);
+			}
+		});
+	});
+};
+
 window.addEventListener("load", () => {
 	updateVH();
 	setScrollbarWidth();
@@ -661,6 +695,7 @@ window.addEventListener("load", () => {
 	setGallery();
 	setLocationSwipers();
 	setAboutApartamentsSwiper();
+	setClassOnClick();
 
 	window.addEventListener("resize", throttle(setBlockAnimation, 200));
 });
