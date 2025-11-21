@@ -30,6 +30,10 @@
 			background: var(--green);
 			z-index: 2;
 		}
+		
+		@include media("<=md") {
+			height: fit-content;
+		}
 	}
 
 	&__location {

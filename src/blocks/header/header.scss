@@ -25,6 +25,9 @@
 		&::after {
 			opacity: 1;
 		}
+		#{$self}__container {
+			border-color: transparent;
+		}
 	}
 
 	&.is-open {
@@ -56,6 +59,7 @@
 		position: relative;
 		z-index: 1;
 		border-bottom: .5px solid var(--sand);
+		transition: all var(--trans);
 
 		@include media("<=xlg") {
 			justify-content: start;

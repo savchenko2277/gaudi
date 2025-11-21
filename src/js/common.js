@@ -81,11 +81,11 @@ const setHeader = () => {
 		const scrollY = window.scrollY;
 		const delta = scrollY - lastScrollY;
 
-		// if (scrollY > 50 && delta > 0) {
-		// 	header.classList.add('is-scroll');
-		// } else {
-		// 	header.classList.remove('is-scroll');
-		// }
+		if (scrollY > 50 && delta > 0) {
+			header.classList.add('is-scroll');
+		} else {
+			header.classList.remove('is-scroll');
+		}
 
 		lastScrollY = scrollY;
 
@@ -150,17 +150,32 @@ const setBlockAnimation = () => {
 					}
 				}
 			);
+			gsap.fromTo(".location-main__location-title",
+				{
+					x: "0%",
+				},
+				{
+					x: "-50%",
+					ease: "none",
+					scrollTrigger: {
+						trigger: ".location-main__block_first",
+						start: "-20% top",
+						end: "50% top",
+						scrub: true
+					}
+				}
+			);
 			gsap.fromTo(".ecology__text",
 				{
 					y: "0%",
 				},
 				{
-					y: "-20%",
+					y: "-50%",
 					ease: "none",
 					scrollTrigger: {
 						trigger: ".ecology",
 						start: "0% top",
-						end: "30% top",
+						end: "100% top",
 						scrub: true
 					}
 				}
@@ -171,13 +186,13 @@ const setBlockAnimation = () => {
 					x: "-50%",
 				},
 				{
-					y: "-80%",
+					y: "-120%",
 					x: "-50%",
 					ease: "none",
 					scrollTrigger: {
 						trigger: ".ecology",
 						start: "0% top",
-						end: "30% top",
+						end: "100% top",
 						scrub: true
 					}
 				}
@@ -207,7 +222,7 @@ const setBlockAnimation = () => {
 			);
 			gsap.fromTo(".ecology__photo",
 				{
-					y: "-120%",
+					y: "-50%",
 					x: "-50%",
 				},
 				{
@@ -345,17 +360,35 @@ const setBlockAnimation = () => {
 			}
 		);
 
-		gsap.fromTo(".infrostructure__title",
+		gsap.fromTo('.estetic__title',
 			{
-				x: "100%",
+				opacity: 0,
+				y: -100
 			},
 			{
-				x: 0,
+				opacity: 1,
+				y: 0,
+				ease: "none",
+				scrollTrigger: {
+					trigger: ".estetic",
+					start: "-50% top",
+					end: "-20% top",
+					scrub: true
+				}
+			}
+		);
+
+		gsap.fromTo(".infrostructure__title span",
+			{
+				x: "0%",
+			},
+			{
+				x: "-50%",
 				ease: "none",
 				scrollTrigger: {
 					trigger: ".infrostructure",
-					start: "-50% top",
-					end: "0% top",
+					start: "-20% top",
+					end: "20% top",
 					scrub: true
 				}
 			}
@@ -499,7 +532,7 @@ const setLocationSwipers = () => {
 		slidesPerView: 1,
 		spaceBetween: 30,
 		loop: true,
-		autoHeight: true,
+
 		navigation: {
 			nextEl: '.location-main__about .location-main__navigation-btn_next',
 			prevEl: '.location-main__about .location-main__navigation-btn_prev',
@@ -685,6 +718,93 @@ const setClassOnClick = () => {
 	});
 };
 
+const setPathsPosition = () => {
+	const block = document.querySelector('.parking');
+	if (!block) return;
+
+	const container = block.querySelector('.parking__container');
+	const paths = block.querySelectorAll('path');
+	if (!container || !paths.length) return;
+
+	const containerRect = container.getBoundingClientRect();
+
+	paths.forEach(path => {
+		const pathLength = path.getTotalLength();
+		path.setAttribute('stroke-dasharray', pathLength);
+		path.setAttribute('stroke-dashoffset', pathLength);
+
+		const rect = path.getBoundingClientRect();
+		const offsets = {
+			top: rect.top - containerRect.top,
+			right: containerRect.right - rect.right,
+			bottom: containerRect.bottom - rect.bottom,
+			left: rect.left - containerRect.left
+		};
+
+		Object.entries(offsets).forEach(([direction, value]) => {
+			const rounded = Math.round(value);
+			path.style.setProperty(`--offset-${direction}`, `${rounded}px`);
+			const datasetKey = `offset${direction.charAt(0).toUpperCase()}${direction.slice(1)}`;
+			path.dataset[datasetKey] = `${rounded}`;
+		});
+	});
+};
+
+const setPathOnClick = () => {
+	const block = document.querySelector('.parking');
+	if (!block) return;
+
+	const container = block.querySelector('.parking__container');
+	const popup = block.querySelector('.parking__popup');
+	const paths = block.querySelectorAll('path');
+	if (!container || !popup || !paths.length) return;
+
+	const pathElements = Array.from(paths);
+	const xlgQuery = window.matchMedia('(max-width: 1280px)');
+
+	const getOffsetTop = (path) => {
+		const stored = Number(path.dataset.offsetTop);
+		if (!Number.isNaN(stored)) {
+			return stored;
+		}
+
+		const containerRect = container.getBoundingClientRect();
+		return path.getBoundingClientRect().top - containerRect.top;
+	};
+
+	const positionPopup = (path) => {
+		const offsetTop = getOffsetTop(path);
+		const { height } = path.getBoundingClientRect();
+		const delta = height * 0.5;
+		const prefersLower = xlgQuery.matches;
+		const top = prefersLower ? offsetTop + delta : offsetTop - delta;
+
+		popup.style.top = `${Math.round(top)}px`;
+		popup.classList.add('active');
+	};
+
+	pathElements.forEach(path => {
+		path.addEventListener('click', (event) => {
+			event.stopPropagation();
+			positionPopup(path);
+		});
+	});
+
+	document.addEventListener('click', (event) => {
+		const target = event.target;
+		if (!(target instanceof Element)) {
+			popup.classList.remove('active');
+			return;
+		}
+
+		if (popup.contains(target)) return;
+		const clickedPath = target.closest('.parking path');
+		if (clickedPath) return;
+
+		popup.classList.remove('active');
+	});
+};
+
 window.addEventListener("load", () => {
 	updateVH();
 	setScrollbarWidth();
@@ -696,6 +816,9 @@ window.addEventListener("load", () => {
 	setLocationSwipers();
 	setAboutApartamentsSwiper();
 	setClassOnClick();
+	setPathsPosition();
+	setPathOnClick();
 
 	window.addEventListener("resize", throttle(setBlockAnimation, 200));
+	window.addEventListener("resize", throttle(setPathsPosition, 200));
 });

@@ -213,6 +213,7 @@
 		b {
 			font-size: fluid(100px, 70px);
 			line-height: 100%;
+			font-weight: 300;
 		}
 
 		@include media("<=xs") {

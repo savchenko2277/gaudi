@@ -21,6 +21,10 @@
 		text-transform: uppercase;
 		text-align: right;
 		margin-bottom: 129px;
+
+		@include media("<=xs") {
+			line-height: 120%;
+		}
 	}
 
 	&__columns {

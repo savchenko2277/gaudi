@@ -18,6 +18,10 @@
 		position: relative;
 		line-height: 100%;
 
+		span {
+			display: block;
+		}
+
 		img {
 			position: absolute;
 			height: fluid(491px, 211px);
@@ -96,7 +100,7 @@
 		font-size: fluid(16px, 12px);
 		font-weight: 300;
 		max-width: 325px;
-		margin-bottom: 200px;
+		margin-bottom: fluid(200px, 0px);
 
 		@include media("<=xlg") {
 			padding-left: 84px;
@@ -147,6 +151,7 @@
 		flex-direction: column;
 		justify-content: end;
 		padding: fluid(60px, 30px) fluid(40px, 24px);
+		z-index: 2;
 
 		&:hover {
 			#{$self}__project-title {
