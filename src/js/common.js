@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Swiper from "swiper";
 import { Navigation, EffectFade, Pagination } from "swiper/modules";
+import { tweakerRangeDouble } from "./libs/tweakerRangeDouble.js";
 
 // Функции
 
@@ -119,9 +120,13 @@ const setSmoothPageScroll = () => {
 }
 
 const setBlockAnimation = () => {
-	console.log('setBlockAnimation');
 	const setGsapAnimations = () => {
 		gsap.registerPlugin(ScrollTrigger);
+
+		gsap.config({
+			nullTargetWarn: false
+		});
+
 
 		if (window.matchMedia("(min-width: 960px)").matches) {
 			gsap.fromTo(".promo__circle",
@@ -805,6 +810,49 @@ const setPathOnClick = () => {
 	});
 };
 
+const setParamsRanges = () => {
+	const rangeBlocks = document.querySelectorAll('.js-range');
+	if (!rangeBlocks.length) return;
+
+	rangeBlocks.forEach((range) => {
+		tweakerRangeDouble(range, {
+			class: 'params__range',
+			input: false
+		});
+	});
+}
+
+const setParamsAdaptive = () => {
+	const block = document.querySelector('.params');
+	if (!block) return;
+
+	const mobileContainer = block.querySelector('.params__popup-filters');
+	const desktopContainer = block.querySelector('.params__up');
+	const paramsFilters = block.querySelector('.params__filters');
+
+	const popup = block.querySelector('.params__popup');
+	const closeBtn = popup.querySelector('.params__popup-close');
+
+	closeBtn.addEventListener('click', () => {
+		popup.classList.remove('is-show');
+	});
+
+	const resultBtn = block.querySelector(".params__result-btn");
+
+	resultBtn.addEventListener('click', () => {
+		popup.classList.toggle('is-show');
+	});
+
+	if (!mobileContainer || !desktopContainer) return;
+
+	if (window.matchMedia('(min-width: 640px)').matches) {
+		desktopContainer.appendChild(paramsFilters);
+	} else {
+		mobileContainer.appendChild(paramsFilters);
+	}
+
+}
+
 window.addEventListener("load", () => {
 	updateVH();
 	setScrollbarWidth();
@@ -818,7 +866,10 @@ window.addEventListener("load", () => {
 	setClassOnClick();
 	setPathsPosition();
 	setPathOnClick();
+	setParamsRanges();
+	setParamsAdaptive();
 
+	window.addEventListener("resize", throttle(setParamsAdaptive, 200));
 	window.addEventListener("resize", throttle(setBlockAnimation, 200));
 	window.addEventListener("resize", throttle(setPathsPosition, 200));
 });

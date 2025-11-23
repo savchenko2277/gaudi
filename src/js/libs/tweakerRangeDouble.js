@@ -63,6 +63,8 @@ export const tweakerRangeDouble = (item, options = {}) => {
 			this.$progress = document.createElement('span');
 			this.$slider = document.createElement('div');
 			this.$top = document.createElement('div');
+			this.$separator = document.createElement('span');
+			this.$measure = document.createElement('span');
 			this.render();
 			this.init();
 		}
@@ -72,6 +74,8 @@ export const tweakerRangeDouble = (item, options = {}) => {
 
 			this.$wrapper.classList.add(this.options.class);
 			this.$top.classList.add(`${this.options.class}__values`);
+			this.$separator.classList.add(`${this.options.class}__separator`);
+			this.$separator.textContent = '-';
 			this.$slider.classList.add(`${this.options.class}__slider`);
 			
 			this.$controls.forEach((control, i) => {
@@ -81,6 +85,7 @@ export const tweakerRangeDouble = (item, options = {}) => {
 				this.$prices[i].disabled = !this.options.input;
 				this.$prices[i].type = 'number';
 				this.$prices[i].value = value;
+				this.#syncInputSize(this.$prices[i]);
 				
 				control.min = 0;
 				control.max = this.options.maxPrice;
@@ -88,10 +93,14 @@ export const tweakerRangeDouble = (item, options = {}) => {
 				control.value = value;
 
 				this.$top.append(this.$prices[i]);
+				if (i === 0) {
+					this.$top.append(this.$separator);
+				}
 				this.$slider.append(control);
 			});
 			
 			this.$slider.append(this.$progress);
+			this.#ensureMeasurer();
 			this.$wrapper.append(this.$top, this.$slider);
 		}
 
@@ -119,9 +128,53 @@ export const tweakerRangeDouble = (item, options = {}) => {
 			this.$prices[1].value = max;
 			this.$controls[0].value = min;
 			this.$controls[1].value = max;
+			this.$prices.forEach(price => this.#syncInputSize(price));
 
 			this.$progress.style.left = (min / this.options.maxPrice * 100) + "%";
 			this.$progress.style.right = (100 - max / this.options.maxPrice * 100) + "%";
+		}
+
+		#ensureMeasurer() {
+			if (this.$measure.dataset.ready) return this.$measure;
+
+			Object.assign(this.$measure.style, {
+				position: 'absolute',
+				left: '-9999px',
+				top: '-9999px',
+				visibility: 'hidden',
+				pointerEvents: 'none',
+				whiteSpace: 'pre'
+			});
+
+			this.$measure.dataset.ready = 'true';
+			this.$wrapper.append(this.$measure);
+			return this.$measure;
+		}
+
+		#measureWidth(text, input) {
+			if (!input) return 1;
+			const measure = this.#ensureMeasurer();
+			const style = window.getComputedStyle(input);
+
+			measure.textContent = text || '0';
+			measure.style.fontFamily = style.fontFamily;
+			measure.style.fontSize = style.fontSize;
+			measure.style.fontWeight = style.fontWeight;
+			measure.style.fontStyle = style.fontStyle;
+			measure.style.letterSpacing = style.letterSpacing;
+			measure.style.textTransform = style.textTransform;
+
+			const rect = measure.getBoundingClientRect();
+			return Math.ceil(rect.width + 2);
+		}
+
+		#syncInputSize(input) {
+			if (!input) return;
+			const raw = String(input.value ?? '');
+			const text = raw.replace(/,/g, '') || '0';
+			const width = this.#measureWidth(text, input);
+
+			input.style.width = `${width}px`;
 		}
 
 		setControls(e) {

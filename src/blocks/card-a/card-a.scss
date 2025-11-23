@@ -1,0 +1,78 @@
+@use 'lib' as *;
+
+.card-a {
+	$self: &;
+
+	&__container {
+		height: 100%;
+	}
+
+	&__body {
+		padding: 30px 30px 60px 30px;
+		background: var(--sand);
+		color: var(--brick);
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+	}
+
+	&__title {
+		font-size: 20px;
+		font-weight: 600;
+		margin-bottom: 15px;
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		margin-bottom: fluid(50px, 40px);
+	}	
+
+	&__list-item {
+		font-size: 16px;
+		font-weight: 300;
+		line-height: 100%;
+	}
+
+	&__scheme {
+		padding: 0px 10px;
+		width: 100%;
+		margin-bottom: 24px;
+	}
+
+	&__price {
+		font-size: 20px;
+		font-weight: 600;
+		margin-top: auto;
+	}
+
+	&__like {
+		@include flex-center;
+
+		cursor: pointer;
+		width: 50px; height: 50px;
+		border-radius: 50%;
+		border: 1px solid var(--brick);
+		position: absolute;
+		top: 30px; right: 30px;
+		z-index: 1;
+
+		svg {
+			width: 26px; height: 19px;
+			stroke: var(--brick);
+			fill: transparent;
+		}
+	}
+
+	&.is-liked {
+		#{$self}__like {
+
+			svg {
+				fill: var(--brick);
+			}
+		}
+	}
+
+}
