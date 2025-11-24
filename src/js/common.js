@@ -9,8 +9,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Swiper from "swiper";
 import { Navigation, EffectFade, Pagination } from "swiper/modules";
 import { tweakerRangeDouble } from "./libs/tweakerRangeDouble.js";
+import { driveTabs } from "./libs/driveTabs";
+
+let lenis;
 
 // Функции
+
+const disableScroll = () => {
+	lenis.stop();
+	document.body.style.overflow = 'hidden';
+}
+
+const enableScroll = () => {
+	lenis.start();
+	document.body.style.overflow = 'unset';
+}
 
 // Единицы высоты (ширины) экрана
 function updateVH() {
@@ -98,8 +111,10 @@ const setHeader = () => {
 
 		if (header.classList.contains('is-open')) {
 			clearHeaderMods();
+			disableScroll();
 		} else {
 			syncHeaderColor();
+			enableScroll();
 		}
 	});
 
@@ -108,7 +123,14 @@ const setHeader = () => {
 }
 
 const setSmoothPageScroll = () => {
-	const lenis = new Lenis();
+
+	lenis = new Lenis({
+		smooth: true,
+		prevent: (node) => {
+			return node.closest('.modal');
+		}
+	});
+
 
 	lenis.on('scroll', ScrollTrigger.update);
 
@@ -853,6 +875,118 @@ const setParamsAdaptive = () => {
 
 }
 
+const setNewsModal = () => {
+	const block = document.querySelector('.news');
+
+	if (!block) return;
+
+	const modal = document.querySelector('.news-modal');
+	const items = block.querySelectorAll('.news__item');
+
+	const modalTitle = modal.querySelector('.news-modal__title');
+	const modalText = modal.querySelector('.news-modal__text');
+	const modalDate = modal.querySelector('.news-modal__date');
+
+	items.forEach(item => {
+		const itemInfo = item.querySelector('.news__item-hidden');
+		if (!itemInfo) return;
+
+		const itemTitle = item.querySelector('.news__item-title').innerHTML;
+		const itemText = item.querySelector('.news__item-text').innerHTML;
+		const itemDate = item.querySelector('.card-b__title').innerHTML;
+
+		item.addEventListener('click', () => {
+			modalDate.innerHTML = itemDate;
+			modalText.innerHTML = itemText;
+			modalTitle.innerHTML = itemTitle;
+
+			modal.classList.add('active');
+			disableScroll();
+		})
+	});
+}
+
+const setModals = () => {
+	const modals = document.querySelectorAll('.modal');
+	const modalOpens = document.querySelectorAll('[data-modal-open]');
+
+	modalOpens.forEach(modalOpen => {
+		modalOpen.addEventListener('click', (e) => {
+			e.preventDefault();
+
+			const modal = modalOpen.dataset.modalOpen ? document.querySelector(modalOpen.dataset.modalOpen) : modalOpen.closest('.modal');
+
+			modal.classList.add('active');
+			disableScroll();
+		});
+	});
+
+	modals.forEach(modal => {
+
+		modal.addEventListener('click', (event) => {
+
+			if (event.target.closest('.modal__close')) {
+				modal.classList.remove('active');
+				enableScroll();
+				return;
+			}
+
+			if (!event.target.closest('.modal__content')) {
+				modal.classList.remove('active');
+				enableScroll();
+			}
+		});
+	});
+};
+
+const setLockScrollMap = () => {
+	const map = document.querySelector('#map');
+	if (!map) return;
+
+	map.addEventListener('mouseenter', (e) => {
+		disableScroll();
+	});
+
+	map.addEventListener('mouseleave', (e) => {
+		enableScroll();
+	});
+}
+
+const setStepsTabs = () => {
+	const block = document.querySelector('.steps');
+	if (!block) return;
+
+	const btnNext = block.querySelector('.steps__navigation-btn_next');
+	const btnPrev = block.querySelector('.steps__navigation-btn_prev');
+	const tabsItems = block.querySelector('.steps__tab');
+
+	const tabs = driveTabs({
+		container: '.steps__body',
+		controls: '.steps__button',
+		selects: '.steps__tab',
+		cls: 'active',
+		onTick(i) {
+			if(i === 0) {
+				btnPrev.classList.add('disabled');
+				btnNext.classList.remove('disabled');
+			} else if(i >= 0 && i < tabsItems.length - 1) {
+				btnPrev.classList.remove('disabled');
+				btnNext.classList.remove('disabled');
+			} else {
+				btnNext.classList.add('disabled');
+				btnPrev.classList.remove('disabled');
+			}
+		}
+	});
+
+	btnNext.addEventListener('click', () => {
+		tabs.move(1);
+	});
+	btnPrev.addEventListener('click', () => {
+		tabs.move(-1);
+	});
+}
+
 window.addEventListener("load", () => {
 	updateVH();
 	setScrollbarWidth();
@@ -868,6 +1002,10 @@ window.addEventListener("load", () => {
 	setPathOnClick();
 	setParamsRanges();
 	setParamsAdaptive();
+	setNewsModal();
+	setModals();
+	setLockScrollMap();
+	setStepsTabs();
 
 	window.addEventListener("resize", throttle(setParamsAdaptive, 200));
 	window.addEventListener("resize", throttle(setBlockAnimation, 200));

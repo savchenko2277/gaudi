@@ -3,6 +3,25 @@
 .card-a {
 	$self: &;
 
+	&_add {
+		cursor: pointer;
+		
+		&:hover {
+			#{$self}__body {
+				background: var(--sand);
+				color: var(--brick);
+			}
+		}
+		#{$self}__body {
+			background: var(--brick);
+			color: var(--sand);
+			align-items: center;
+			justify-content: center;
+			padding: 30px;
+			transition: all var(--trans);
+		}
+	}
+
 	&__container {
 		height: 100%;
 	}
@@ -73,6 +92,34 @@
 				fill: var(--brick);
 			}
 		}
+	}
+
+	&__add {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 40px; 
+	}
+
+	&__add-icon {
+		@include flex-center;
+		border-radius: 50%;
+		width: fluid(60px, 36px);
+		height: fluid(60px, 36px);
+		background: var(--sand);
+
+		svg {
+			width: fluid(40px, 24px);
+			height: fluid(40px, 24px);
+			fill: var(--brick);
+		}
+	}
+
+	&__add-text {
+		text-align: center;
+		text-transform: uppercase;
+		font-size: fluid(20px, 16px);
+		width: 100%;
 	}
 
 }

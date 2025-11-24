@@ -1,0 +1,155 @@
+@use 'lib' as *;
+
+.documentation {
+	$self: &;
+
+	background: var(--sand);
+	color: var(--brick);
+	padding-top: fluid(220px, 110px);
+	padding-bottom: 50px;
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__title {
+		font-size: fluid(100px, 40px);
+		font-weight: 300;
+		text-transform: uppercase;
+		margin-bottom: fluid(100px, 80px);
+		hyphens: auto;
+	}
+
+	&__items {
+		display: flex;
+		flex-direction: column;
+		gap: fluid(100px, 60px);
+	}
+
+	&__item {
+		display: grid;
+		grid-template-columns: minmax(auto, 30%) minmax(auto, 70%);
+		padding-top: 40px;
+		border-top: .5px solid var(--brick);
+
+		@include media("<=sm") {
+			grid-template-columns: 100%;
+			gap: 40px;
+		}
+
+		@include media("<=xs") {
+			padding-top: 0;
+			border-top: none;
+		}
+	}
+
+	&__row-title {
+		text-transform: uppercase;
+		font-size: fluid(30px, 16px);
+		font-weight: 300;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 48px;
+	}
+
+	&__row {
+		&:not(:last-child) {
+			padding-bottom: fluid(40px, 20px);
+			border-bottom: .5px solid var(--brick);
+		}
+		&:hover {
+			#{$self}__download-icon {
+				background: var(--brick);
+
+				svg {
+					fill: var(--sand);
+				}
+			}
+		}
+	}
+
+	&__row-content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		@include media("<=xs") {
+			flex-direction: column;
+			gap: 20px;
+		}
+	}
+
+	&__download {
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+		align-items: center;
+	}
+
+	&__download-icon {
+		@include flex-center;
+
+		border-radius: 50%;
+		border: 1px solid var(--brick);
+		width: fluid(50px, 30px);
+		height: fluid(50px, 30px);
+		transition: all var(--trans);
+
+		svg {
+			width: fluid(20px, 15px);
+			height: fluid(20px, 15px);
+			fill: var(--brick);
+			transition: all var(--trans);
+		}
+	}
+
+	&__download-content {
+		display: flex;
+		flex-direction: column;
+		gap: fluid(15px, 10px);
+	}
+
+	&__download-name {
+		font-size: fluid(16px, 12px);
+		font-weight: 500;
+		line-height: 100%;
+	}
+
+	&__download-size {
+		font-size: 12px;
+		color: #9A9A9A;
+		line-height: 100%;
+	}
+
+	&__row-info {
+		padding-top: 8px;
+		font-size: 12px;
+		color: #4E4E4E;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 20px;
+		line-height: 100%;
+		height: fit-content;
+
+		span {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 20px;
+
+			&::before {
+				content: '';
+				display: inline-block;
+				width: 1px;
+				height: 12px;
+				background: #4E4E4E;
+			}
+		}
+	}
+
+}

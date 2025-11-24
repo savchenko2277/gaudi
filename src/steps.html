@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include("_head.html", {"id":"home"})
+
+<body @@if(this.id){id="@@id" }>
+
+
+    @@include("_header.html", {})
+
+    <main class="site-container">
+
+        <section data-header-color="brick" class="steps">
+            <div class="steps__container container">
+                <h2 class="steps__title title">ХОД СТРОИТЕЛЬСТВА</h2>
+                <div class="steps__body">
+                    <div class="steps__side">
+                        <div class="steps__buttons">
+                            <button type="button" class="steps__button active">1 ОЧЕРЕДЬ</button>
+                            <button type="button" class="steps__button">2 очередь</button>
+                        </div>
+                        <div class="steps__date">
+                            <img loading="lazy" src="./img/steps/icon.svg" alt="" class="steps__date-icon">
+                            <div class="steps__date-content">
+                                Начало строительства
+                                <span>01 июля 2025</span>
+                            </div>
+                        </div>
+                        <div class="steps__navigation">
+                            <button class="steps__navigation-btn steps__navigation-btn_prev disabled">
+                                <svg>
+                                    <use xlink:href="#arrow-left"></use>
+                                </svg>
+                            </button>
+                            <button class="steps__navigation-btn steps__navigation-btn_next">
+                                <svg>
+                                    <use xlink:href="#arrow-right"></use>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="steps__content">
+                        <div class="steps__tab active">
+                            <div class="steps__card">
+                                <div class="steps__card-top">
+                                    <div class="steps__card-steps">
+                                        <b>08</b> 2025
+                                    </div>
+                                </div>
+                                <p class="steps__card-month">август</p>
+                                <div class="steps__card-image">
+                                    <img loading="lazy" src="./img/steps/1.webp" alt="" class="steps__card-image">
+                                    <div class="steps__card-icon">
+                                        <svg>
+                                            <use xlink:href="#plus"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="steps__card">
+                                <div class="steps__card-top">
+                                    <div class="steps__card-steps">
+                                        <b>07</b> 2025
+                                    </div>
+                                </div>
+                                <p class="steps__card-month">июль</p>
+                                <div class="steps__card-image">
+                                    <img loading="lazy" src="./img/steps/1.webp" alt="" class="steps__card-image">
+                                    <div class="steps__card-icon">
+                                        <svg>
+                                            <use xlink:href="#plus"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="steps__tab">
+                            <div class="steps__card">
+                                <div class="steps__card-top">
+                                    <div class="steps__card-steps">
+                                        <b>08</b> 2025
+                                    </div>
+                                </div>
+                                <p class="steps__card-month">август</p>
+                                <div class="steps__card-image">
+                                    <img loading="lazy" src="./img/steps/1.webp" alt="" class="steps__card-image">
+                                    <div class="steps__card-icon">
+                                        <svg>
+                                            <use xlink:href="#plus"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="steps__card">
+                                <div class="steps__card-top">
+                                    <div class="steps__card-steps">
+                                        <b>07</b> 2025
+                                    </div>
+                                </div>
+                                <p class="steps__card-month">июль</p>
+                                <div class="steps__card-image">
+                                    <img loading="lazy" src="./img/steps/1.webp" alt="" class="steps__card-image">
+                                    <div class="steps__card-icon">
+                                        <svg>
+                                            <use xlink:href="#plus"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @@include("_footer.html")
+    </main>
+    @@include("_modals.html")
+</body>
+
+@@include("_sprite.svg")
+
+<script src="js/common.js?v=0"></script>
+
+</html>

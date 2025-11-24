@@ -9,6 +9,10 @@
 	overflow: hidden;
 	font-family: "Montserrat", sans-serif;
 
+	&_blue {
+		background: var(--sea);
+	}
+
 	&__main {
 		padding-bottom: fluid(80px, 40px);
 		border-bottom: 1px solid var(--sand);

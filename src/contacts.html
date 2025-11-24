@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include("_head.html", {"id":"home"})
+
+<body>
+
+
+    @@include("_header.html", {})
+
+    <main class="site-container">
+
+        <section data-parallax class="contacts">
+            <div class="contacts__top">
+                <div class="contacts__top-container container">
+                    <h2 class="contacts__title title">Контакты</h2>
+                    <div class="contacts__columns">
+                        <div class="contacts__column">
+                            <div class="contacts__info">
+                                <h4 class="contacts__info-title">Адрес:</h4>
+                                <div class="contacts__info-content">
+                                    <p>
+                                        Россия, Калининградская область, г. Светлогорск, Калининградский пр-т, 68б
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="contacts__info">
+                                <h4 class="contacts__info-title">Режим работы:</h4>
+                                <div class="contacts__info-content">
+                                    <p>
+                                        Пн. – Пт.: с 10:00 до 19:00, <br> перерыв с 12:00 до 13:00
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="contacts__info">
+                                <h4 class="contacts__info-title">Телефон:</h4>
+                                <div class="contacts__info-content">
+                                    <a href="#">+7 (911) 458-84-04</a>
+                                    <a href="#">smeala@mail.ru</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contacts__column">
+                            <div class="contacts__info">
+                                <h4 class="contacts__info-title">Карточка компании:</h4>
+                                <div class="contacts__info-content">
+                                    <p>
+                                        Полное наименование: Общество с ограниченной ответственностью «ДИВЕК-Проект»ИНН: <br>
+                                        3906262875 <br>
+                                        КПП: 390601001ОГРН: 1123926017137 <br>
+                                        ОКПО: 37757324 <br>
+                                        Юридический адрес: 236006, Калининградская область, г. Калининград, ул. <br>
+                                        Театральная, д. 35, офис 514 <br>
+                                        Директор: Шуршина Наталья Васильевна
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="contacts__links">
+                                <a href="#" class="contacts__link">
+                                    <img loading="lazy" src="./img/icons/tg-2.svg" alt="">
+                                    Связаться
+                                </a>
+                                <a href="#" class="contacts__link">
+                                    <img loading="lazy" src="./img/icons/wa-2.svg" alt="">
+                                    Whatsapp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="map" class="contacts__map"></div>
+            <div class="contacts__falls">
+                <img data-parallax-item="20, 0.01" src="./img/decor/fall-2.webp" alt="" class="contacts__fall">
+                <img data-parallax-item="-20, 0.01" src="./img/decor/fall-blur-2.webp" alt="" class="contacts__fall">
+            </div>
+        </section>
+
+        @@include("_footer.html")
+    </main>
+    @@include("_modals.html")
+</body>
+
+@@include("_sprite.svg")
+
+<script src="js/common.js?v=0"></script>
+
+</html>

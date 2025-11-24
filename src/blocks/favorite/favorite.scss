@@ -1,43 +1,67 @@
 @use 'lib' as *;
 
-.news {
+.favorite {
 	$self: &;
 
-	background: var(--sea);
-	color: var(--sand);
+	background: var(--green);
 	padding-top: fluid(220px, 110px);
 	padding-bottom: fluid(150px, 80px);
 
-	&__container {
+	&__container {}
+
+	&__top {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		align-items: end;
+		justify-content: space-between;
+		padding-bottom: 40px;
+		border-bottom: .5px solid var(--sand);
+		margin-bottom: 40px;
+
+		@include media("<=xs") {
+			padding-bottom: 0;
+			border: none;
+		}
 	}
 
 	&__title {
-		text-transform: uppercase;
-		font-weight: 300;
 		font-size: fluid(100px, 40px);
-		margin-bottom: fluid(100px, 40px);
+		font-weight: 300;
+		text-transform: uppercase;
 		line-height: 100%;
 	}
 
-	&__categories {
-		margin-bottom: 60px;
+	&__result {
+		font-weight: 300;
+		text-transform: uppercase;
+
+		@include media("<=xs") {
+			display: none;
+		}
+	}
+
+	&__navigation {
 		display: flex;
 		flex-direction: row;
 		gap: fluid(20px, 10px);
+		flex-wrap: wrap;
+		padding-bottom: 40px;
+		border-bottom: .5px solid var(--sand);
+
+		@include media("<=xs") {
+			padding-bottom: 60px;
+		}
 	}
 
-	&__categories-btn {
-		@include flex-center;
-		padding: fluid(24.5px, 20.5px);
-		min-width: fluid(194px, 120px);
-		border-radius: 30px;
-		border: 1px solid var(--sand);
-		font-size: fluid(16px, 14px);
-		text-transform: uppercase;
-		font-weight: 500;
+	&__navigation-btn {
 		line-height: 100%;
+		padding: fluid(24.5px, 20.5px) 0px;
+		border: 1px solid var(--sand);
+		border-radius: 30px;
+		min-width: fluid(194px, 148px);
+		font-size: 16px;
+		font-weight: 500;
+		text-transform: uppercase;
 
 		&.is-current {
 			background: var(--sand);
@@ -47,39 +71,28 @@
 
 	&__items {
 		display: grid;
-		margin-bottom: fluid(100px, 60px);
 
-		@include media("<=sm") {
+		@include media("<=xs") {
 			grid-template-columns: 100%;
 		}
 
-		@include media(">sm") {
+		@include media(">xs") {
 			grid-template-columns: repeat(2, auto);
 		}
 
-		@include media(">xlg") {
+		@include media(">sm") {
 			grid-template-columns: repeat(3, auto);
 		}
-
 	}
 
 	&__item {
 		padding-top: fluid(40px, 20px);
-		cursor: pointer;
 
-		&-hidden {
-			display: none;
-		}
-
-		.card-b__body {
-			min-height: fluid(458px, 380px);
-		}
-
-		@include media(">xlg") {
+		@include media(">sm") {
 
 			&:nth-child(3n + 1),
 			&:nth-child(3n + 2) {
-				.card-b__container {
+				.card-a__container {
 					padding-right: fluid(40px, 20px);
 					border-right: 1px solid var(--sand);
 				}
@@ -87,7 +100,7 @@
 
 			&:nth-child(3n + 2),
 			&:nth-child(3n + 3) {
-				.card-b__container {
+				.card-a__container {
 					padding-left: fluid(40px, 20px);
 				}
 			}
@@ -99,19 +112,19 @@
 			}
 		}
 
-		@include media(">sm", "<=xlg") {
+		@include media(">xs", "<=sm") {
 
 			border-top: 1px solid var(--sand);
 
 			&:nth-child(2n + 1) {
-				.card-b__container {
+				.card-a__container {
 					padding-right: fluid(40px, 20px);
 					border-right: 1px solid var(--sand);
 				}
 			}
 
 			&:nth-child(2n + 2) {
-				.card-b__container {
+				.card-a__container {
 					padding-left: fluid(40px, 20px);
 				}
 			}
@@ -121,8 +134,9 @@
 			}
 		}
 
-		@include media("<=sm") {
+		@include media("<=xs") {
 
+			min-height: fluid(458px, 365px);
 			padding-top: fluid(40px, 20px);
 
 			&:first-child {
@@ -133,28 +147,6 @@
 				padding-bottom: fluid(40px, 20px);
 				border-bottom: 1px solid var(--sand);
 			}
-		}
-	}
-
-	&__navigation {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: 20px;
-		align-self: center;
-	}
-
-	&__navigation-item {
-		@include flex-center;
-		cursor: pointer;
-		font-size: 20px;
-
-		&.is-current {
-			width: 50px;
-			height: 50px;
-			border-radius: 50%;
-			background: var(--sand);
-			color: var(--sea);
 		}
 	}
 
