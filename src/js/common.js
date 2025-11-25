@@ -7,7 +7,7 @@ import Lenis from 'lenis'
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Swiper from "swiper";
-import { Navigation, EffectFade, Pagination } from "swiper/modules";
+import { Navigation, EffectFade, Pagination, Mousewheel } from "swiper/modules";
 import { tweakerRangeDouble } from "./libs/tweakerRangeDouble.js";
 import { driveTabs } from "./libs/driveTabs";
 
@@ -952,6 +952,144 @@ const setLockScrollMap = () => {
 	});
 }
 
+const setStepsGallery = () => {
+	const section = document.querySelector('.steps');
+	const gallery = document.querySelector('.steps-gallery');
+
+	if (!section || !gallery) return;
+
+	const cards = Array.from(section.querySelectorAll('.steps__card'));
+	if (!cards.length) return;
+
+	const imageEl = gallery.querySelector('.steps-gallery__image img');
+	const imageCounter = gallery.querySelector('.steps-gallery__image-counter');
+	const thumbsContainer = gallery.querySelector('[data-steps-gallery-thumbs]');
+	const closeTriggers = gallery.querySelectorAll('[data-steps-gallery-close]');
+	const prevBtn = gallery.querySelector('[data-steps-gallery-prev]');
+	const nextBtn = gallery.querySelector('[data-steps-gallery-next]');
+
+	let items = [];
+	let currentIndex = 0;
+
+	const handleKeydown = (event) => {
+		if (event.key === 'Escape') {
+			close();
+		} else if (event.key === 'ArrowRight') {
+			move(1);
+		} else if (event.key === 'ArrowLeft') {
+			move(-1);
+		}
+	};
+
+	const updateCounter = () => {
+		if (!imageCounter) return;
+		imageCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+	};
+
+	const renderThumbs = () => {
+		if (!thumbsContainer) return;
+		thumbsContainer.innerHTML = '';
+
+		const previews = items
+			.map((item, index) => ({ ...item, index }))
+			.filter(({ index }) => index !== currentIndex)
+			.slice(0, 4);
+
+		previews.forEach((preview, idx) => {
+			const btn = document.createElement('button');
+			btn.type = 'button';
+			btn.className = 'steps-gallery__thumb';
+			btn.style.backgroundImage = `url(${preview.src})`;
+			btn.dataset.index = `${preview.index}`;
+
+			if (idx === 0) {
+				const badge = document.createElement('span');
+				badge.className = 'steps-gallery__thumb-counter';
+				badge.textContent = `${currentIndex + 1} / ${items.length}`;
+				btn.appendChild(badge);
+			}
+
+			thumbsContainer.appendChild(btn);
+		});
+	};
+
+	const render = () => {
+		if (!items.length || !imageEl) return;
+
+		const active = items[currentIndex];
+		imageEl.src = active.src;
+		imageEl.alt = active.alt;
+
+		updateCounter();
+		renderThumbs();
+	};
+
+	const move = (direction = 1) => {
+		if (!items.length) return;
+
+		currentIndex += direction;
+
+		if (currentIndex >= items.length) {
+			currentIndex = 0;
+		} else if (currentIndex < 0) {
+			currentIndex = items.length - 1;
+		}
+
+		render();
+	};
+
+	const close = () => {
+		gallery.classList.remove('is-open');
+		enableScroll();
+		document.removeEventListener('keydown', handleKeydown);
+	};
+
+	const open = (card) => {
+		const cardImages = Array.from(card.querySelectorAll('.steps__card-images img'));
+		if (!cardImages.length) return;
+
+		items = cardImages.map(img => ({
+			src: img.dataset.full || img.src,
+			alt: img.alt || ''
+		}));
+
+		const mainImage = card.querySelector('.steps__card-image img');
+		const mainSrc = mainImage?.src;
+		const matchIndex = items.findIndex(item => item.src === mainSrc);
+		currentIndex = matchIndex >= 0 ? matchIndex : 0;
+
+		render();
+		gallery.classList.add('is-open');
+		disableScroll();
+		document.addEventListener('keydown', handleKeydown);
+	};
+
+	cards.forEach(card => {
+		card.addEventListener('click', (event) => {
+			event.preventDefault();
+			open(card);
+		});
+	});
+
+	closeTriggers.forEach(trigger => {
+		trigger.addEventListener('click', () => close());
+	});
+
+	prevBtn?.addEventListener('click', () => move(-1));
+	nextBtn?.addEventListener('click', () => move(1));
+
+	thumbsContainer?.addEventListener('click', (event) => {
+		const target = event.target.closest('.steps-gallery__thumb');
+		if (!target) return;
+
+		const nextIndex = Number(target.dataset.index);
+		if (!Number.isNaN(nextIndex)) {
+			currentIndex = nextIndex;
+			render();
+		}
+	});
+};
+
 const setStepsTabs = () => {
 	const block = document.querySelector('.steps');
 	if (!block) return;
@@ -966,10 +1104,10 @@ const setStepsTabs = () => {
 		selects: '.steps__tab',
 		cls: 'active',
 		onTick(i) {
-			if(i === 0) {
+			if (i === 0) {
 				btnPrev.classList.add('disabled');
 				btnNext.classList.remove('disabled');
-			} else if(i >= 0 && i < tabsItems.length - 1) {
+			} else if (i >= 0 && i < tabsItems.length - 1) {
 				btnPrev.classList.remove('disabled');
 				btnNext.classList.remove('disabled');
 			} else {
@@ -984,6 +1122,119 @@ const setStepsTabs = () => {
 	});
 	btnPrev.addEventListener('click', () => {
 		tabs.move(-1);
+	});
+}
+
+const setGallerySwipers = () => {
+	const gallery = document.querySelector('.gallery');
+	if (!gallery) return;
+
+	const modals = gallery.querySelectorAll('.gallery-slide__modal');
+	if (!modals.length) return;
+
+	const closeBtns = gallery.querySelectorAll('.gallery-slide__modal-close');
+
+	closeBtns.forEach(item => {
+		item.addEventListener('click', () => {
+			item.closest('.gallery-slide__modal').classList.remove('active');
+		});
+	});
+
+	modals.forEach(item => {
+		const sliderEl = item.querySelector('.swiper');
+
+		if (!sliderEl) return;
+
+		const swiper = new Swiper(sliderEl, {
+			slidesPerView: 2,
+			spaceBetween: 0,
+			centeredSlides: false,
+			direction: 'vertical',
+			breakpoints: {
+				960: {
+					slidesPerView: 1.5,
+					spaceBetween: 40,
+					direction: 'horizontal',
+					centeredSlides: true,
+				},
+				1280: {
+					slidesPerView: 2,
+					spaceBetween: 40,
+					direction: 'horizontal',
+					centeredSlides: true,
+				},
+				1440: {
+					slidesPerView: 2.5,
+					spaceBetween: 40,
+					direction: 'horizontal',
+					centeredSlides: true,
+				}
+			},
+
+			on: {
+				init() {
+					updatePagination(this);
+				},
+
+				slideChange() {
+					updatePagination(this);
+				}
+			}
+		});
+
+		function updatePagination(swiperInstance) {
+			const pagination = item.querySelector('.gallery-slide__modal-pagination');
+			if (!pagination) return;
+
+			const currentText = pagination.querySelector('.gallery-slide__modal-current');
+			const allText = pagination.querySelector('.gallery-slide__modal-all');
+
+			currentText.textContent = swiperInstance.realIndex + 1;
+			allText.textContent = swiperInstance.slides.length;
+		}
+	});
+
+	const mainSwiper = new Swiper('.gallery__swiper', {
+		modules: [Navigation],
+		slidesPerView: 2,
+		spaceBetween: 60,
+		centeredSlides: true,
+		initialSlide: 1,
+		loop: true,
+		direction: 'vertical',
+		overflow: 'visible',
+		navigation: {
+			nextEl: '.gallery__navigation-btn_next',
+			prevEl: '.gallery__navigation-btn_prev',
+		},
+		breakpoints: {
+			1024: {
+				direction: 'horizontal',
+				spaceBetween: 80,
+			},
+			1280: {
+				direction: 'horizontal',
+				spaceBetween: 100,
+			},
+			1440: {
+				direction: 'horizontal',
+				spaceBetween: 157,
+			},
+			960: {
+				direction: 'horizontal',
+			},
+		},
+		on: {
+			init() {
+				const buttons = document.querySelectorAll('.gallery-slide__btn');
+
+				buttons.forEach(item => {
+					item.addEventListener('click', () => {
+						modals[item.dataset.openModalGallery - 1].classList.add('active');
+					});
+				});
+			}
+		}
 	});
 }
 
@@ -1005,7 +1256,9 @@ window.addEventListener("load", () => {
 	setNewsModal();
 	setModals();
 	setLockScrollMap();
+	setStepsGallery();
 	setStepsTabs();
+	setGallerySwipers();
 
 	window.addEventListener("resize", throttle(setParamsAdaptive, 200));
 	window.addEventListener("resize", throttle(setBlockAnimation, 200));

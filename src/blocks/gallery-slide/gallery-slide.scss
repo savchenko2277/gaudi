@@ -1,0 +1,223 @@
+@use 'lib' as *;
+
+.gallery-slide {
+	$self: &;
+
+	height: fluid(493px, 330px);
+
+	&.swiper-slide {
+		opacity: 0.4;
+
+		transition: opacity var(--trans);
+
+		#{$self}__btn {
+			opacity: 0;
+		}
+
+		#{$self}__title {
+			transform: translateY(0%);
+			opacity: 0;
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #00000099;
+			opacity: 1;
+			transition: all var(--trans);
+			pointer-events: none;
+		}
+	}
+
+	&.swiper-slide-active {
+		opacity: 1;
+
+		&:after {
+			opacity: 0;
+		}
+
+		#{$self}__btn {
+			opacity: 1;
+		}
+
+		#{$self}__title {
+			transform: translateY(-50%);
+			opacity: 1;
+
+			@include media("<=xs") {
+				transform: translateY(-150%);
+			}
+		}
+	}
+
+	&__image {
+		position: relative;
+		height: 100%;
+		width: 100%;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&__btn {
+		@include flex-center;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: fluid(50px, 36px);
+		height: fluid(50px, 36px);
+		border-radius: 50%;
+		background: var(--brick);
+		cursor: pointer;
+		transition: all var(--trans);
+		z-index: 1;
+
+		svg {
+			width: fluid(20px, 14px);
+			height: fluid(20px, 14px);
+			fill: var(--sand);
+		}
+	}
+
+	&__title {
+		font-size: fluid(100px, 40px);
+		hyphens: auto;
+		font-weight: 300;
+		font-family: "Bounded";
+		position: absolute;
+		width: 100%;
+		text-align: center;
+		top: 100%;
+		line-height: 100%;
+		transition: all var(--trans);
+
+		@include media("<=xs") {
+			max-width: 241px;
+			left: -5%;
+			text-align: start;
+		}
+	}
+
+	&__modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 100;
+		background: var(--sea);
+		transition: all var(--trans);
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+
+		&.active {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: all;
+		}
+
+		&-title {
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			font-size: fluid(170px, 40px);
+			z-index: 100;
+			font-weight: 300;
+			line-height: 100%;
+
+			@include media("<=md") {
+				display: none;
+			}
+		}
+
+		&-pagination {
+			position: absolute;
+			bottom: 70px;
+			left: 40px;
+			z-index: 100;
+			font-size: 30px;
+			text-transform: uppercase;
+			font-weight: 300;
+			line-height: 100%;
+			font-family: "Bounded";
+
+
+			@include media("<=md") {
+				display: none;
+			}
+		}
+
+		&-close {
+			@include flex-center;
+
+			position: absolute;
+			top: 40px;
+			left: 0;
+			width: fluid(60px, 30px);
+			height: fluid(60px, 30px);
+			border-radius: 50%;
+			background: var(--sand);
+			pointer-events: all;
+
+			svg {
+				width: fluid(38px, 18px);
+				height: fluid(30px, 14px);
+				fill: var(--sea);
+			}
+		}
+
+		@include media(">md") {
+			.swiper-wrapper {
+				height: fit-content;
+			}
+		}
+	}
+
+	&__container {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 100;
+		pointer-events: none;
+	}
+
+	&__swiper.swiper {
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+
+	&__item.swiper-slide {
+		position: relative;
+
+		@include media(">md") {
+			height: 860px !important;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+
+}

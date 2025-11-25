@@ -1,0 +1,37 @@
+@use 'lib' as *;
+
+.steps-gallery {
+	$self: &;
+
+	&__body {
+
+	}
+
+	&__close {
+
+	}
+
+	&__thumbs {
+
+	}
+
+	&__nav {
+
+		&_prev {
+			
+		}
+
+		&_next {
+			
+		}
+	}
+
+	&__viewer {
+
+	}
+
+	&__image {
+
+	}
+
+}

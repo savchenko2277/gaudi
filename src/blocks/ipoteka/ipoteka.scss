@@ -1,0 +1,175 @@
+@use 'lib' as *;
+
+.ipoteka {
+	$self: &;
+
+	background: var(--green);
+	color: var(--sand);
+	padding-top: fluid(150px, 80px);
+	padding-bottom: fluid(280px, 200px);
+
+	&__container {
+		position: relative;
+	}
+
+	&__title {
+		text-transform: uppercase;
+		font-weight: 300;
+		font-size: fluid(100px, 40px);
+		width: 100%;
+		padding-bottom: 100px;
+		border-bottom: 0.5px solid var(--sand);
+		margin-bottom: 40px;
+
+		@include media("<=md") {
+			padding-bottom: 0;
+			border: none;
+		}
+	}
+
+	&__content {
+		padding: 60px;
+		background: var(--brick);
+		display: flex;
+		flex-direction: column;
+
+		@include media("<=md") {
+			background: none;
+			padding: 0;
+		}
+	}
+
+	&__table {}
+
+	&__row {
+		display: grid;
+		grid-template-columns: 1fr 11% 11% 11%;
+		padding: fluid(40px, 20px) 0;
+		border-bottom: .5px solid var(--sand);
+
+		&:first-child {
+			padding-top: 0;
+		}
+
+		&_title {
+			font-size: 16px;
+			font-weight: 300;
+			line-height: 160%;
+
+			@include media("<=md") {
+				display: none;
+			}
+		}
+
+		@include media("<=md") {
+			grid-template-columns: 100%;
+			background: var(--brick);
+			padding: 20px;
+			border: none;
+
+			&:not(:last-child) {
+				margin-bottom: 10px;
+			}
+		}
+	}
+
+	&__row-logo {
+		height: 20px;
+
+		@include media("<=md") {
+			height: 38px;
+			margin-bottom: 20px;
+		}
+	}
+
+	&__row-value {
+		font-weight: 500;
+
+		span {
+			display: none;
+
+			@include media("<=md") {
+				display: block;
+			}
+		}
+		
+		@include media("<=md") {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px 0px;
+
+			&:not(:last-child) {
+				border-bottom: .5px solid var(--sand);
+			}
+		}
+	}
+
+	&__link {
+		@include flex-center;
+
+		flex-direction: column;
+		gap: fluid(20px, 10px);
+		border-radius: 50%;
+		background: var(--sand);
+		color: var(--sand);
+		width: fluid(200px, 120px);
+		height: fluid(200px, 120px);
+		margin-bottom: -150px;
+		align-self: center;
+		position: relative;
+		z-index: 2;
+
+		span {
+			display: block;
+			max-width: 104px;
+			text-align: center;
+			line-height: 160%;
+			font-size: fluid(20px, 14px);
+			font-weight: 500;
+			color: var(--brick);
+		}
+
+		svg {
+			fill: var(--brick);
+			height: fluid(40px, 22px);
+			width: fluid(32px, 18px);
+		}
+
+		@include media("<=md") {
+			transform: translateY(-50%);
+		}
+	}
+
+	&__text {
+		margin-top: fluid(80px, 40px);
+		margin-bottom: 47px;
+		font-size: fluid(12px, 10px);
+		line-height: 160%;
+		font-weight: 300;
+
+		@include media("<=md") {
+			padding: 40px 20px;
+			padding-top: 0px;
+			margin-bottom: 0;
+			margin-top: 0;
+			background: var(--brick);
+			padding-bottom: 100px;
+		}
+	}
+
+	&__image {
+		position: absolute;
+		bottom: -25%;
+		left: 25%;
+		width: fluid(325px, 143px);
+		z-index: 1;
+
+		@include media("<=md") {
+			bottom: -12%;
+			left: 10%;
+		}
+	}
+
+}

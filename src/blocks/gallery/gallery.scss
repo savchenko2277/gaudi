@@ -1,0 +1,77 @@
+@use 'lib' as *;
+
+.gallery {
+	$self: &;
+
+	padding-top: 220px;
+	padding-bottom: 132px;
+	background: var(--sea);
+	overflow: hidden;
+
+	@include media("<=md") {
+		padding: 0 40px;
+	}
+
+	&__navigation {
+		position: absolute;
+		top: 50%; left: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		max-width: 1160px;
+		width: 100%;
+		z-index: 1;
+		pointer-events: none;
+		padding: 0 15px;
+
+		@include media("<=md") {
+			display: none;
+		}
+	}
+
+	&__navigation-btn {
+		width: 50px;
+		height: 50px;
+		border-radius: 100%;
+		background: var(--sand);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		transition: all var(--trans);
+		border: 1px solid var(--sand);
+		pointer-events: all;
+
+		svg {
+			width: 30px;
+			height: 24px;
+			stroke: var(--brick);
+			fill: none;
+			transition: all var(--trans);
+		}
+
+		&:hover {
+			background: var(--brick);
+			border-color: var(--brick);
+
+			svg {
+				stroke: var(--sand);
+			}
+		}
+	}
+
+	&__container {
+	}
+
+	&__swiper.swiper {
+		overflow: visible;
+		position: relative;
+
+		@include media("<=md") {
+			max-height: 100vh;
+		}
+	}
+
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include("_head.html", {"id":"home"})
+
+<body @@if(this.id){id="@@id" }>
+
+
+    @@include("_header.html", {})
+
+    <main class="site-container">
+
+        <section class="gallery">
+            <div class="gallery__container">
+                <div class="gallery__swiper swiper">
+                    <div class="swiper-wrapper">
+                        <div class="gallery-slide swiper-slide">
+                            <div class="gallery-slide__image">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                                <div class="gallery-slide__btn" data-open-modal-gallery="1">
+                                    <svg>
+                                        <use xlink:href="#plus"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="gallery-slide__title">АРХИТЕКТУРА</h4>
+                        </div>
+                        <div class="gallery-slide swiper-slide">
+                            <div class="gallery-slide__image">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                                <div class="gallery-slide__btn" data-open-modal-gallery="1">
+                                    <svg>
+                                        <use xlink:href="#plus"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="gallery-slide__title">АРХИТЕКТУРА</h4>
+                        </div>
+                        <div class="gallery-slide swiper-slide">
+                            <div class="gallery-slide__image">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                                <div class="gallery-slide__btn" data-open-modal-gallery="1">
+                                    <svg>
+                                        <use xlink:href="#plus"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="gallery-slide__title">АРХИТЕКТУРА</h4>
+                        </div>
+                        <div class="gallery-slide swiper-slide">
+                            <div class="gallery-slide__image">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                                <div class="gallery-slide__btn" data-open-modal-gallery="1">
+                                    <svg>
+                                        <use xlink:href="#plus"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="gallery-slide__title">АРХИТЕКТУРА</h4>
+                        </div>
+                        <div class="gallery-slide swiper-slide">
+                            <div class="gallery-slide__image">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                                <div class="gallery-slide__btn" data-open-modal-gallery="1">
+                                    <svg>
+                                        <use xlink:href="#plus"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="gallery-slide__title">АРХИТЕКТУРА</h4>
+                        </div>
+                        <div class="gallery-slide swiper-slide">
+                            <div class="gallery-slide__image">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                                <div class="gallery-slide__btn" data-open-modal-gallery="1">
+                                    <svg>
+                                        <use xlink:href="#plus"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="gallery-slide__title">АРХИТЕКТУРА</h4>
+                        </div>
+                    </div>
+                    <div class="gallery__navigation">
+                        <button class="gallery__navigation-btn gallery__navigation-btn_prev">
+                            <svg>
+                                <use xlink:href="#arrow-left"></use>
+                            </svg>
+                        </button>
+                        <button class="gallery__navigation-btn gallery__navigation-btn_next">
+                            <svg>
+                                <use xlink:href="#arrow-right"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery__modals">
+                <div class="gallery-slide__modal">
+                    <div class="gallery-slide__swiper swiper">
+                        <div class="swiper-wrapper">
+                            <h5 class="gallery-slide__modal-title title">АРХИТЕКТУРА</h5>
+                            <div class="gallery-slide__item swiper-slide">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                            </div>
+                            <div class="gallery-slide__item swiper-slide">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                            </div>
+                            <div class="gallery-slide__item swiper-slide">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                            </div>
+                            <div class="gallery-slide__item swiper-slide">
+                                <img loading="lazy" src="./img/gallery/1.webp" alt="">
+                            </div>
+                        </div>
+                        <div class="gallery-slide__modal-pagination">
+                            <span class="gallery-slide__modal-current">0</span>/<span
+                                class="gallery-slide__modal-all">0</span>
+                        </div>
+                    </div>
+                    <div class="gallery-slide__container container">
+                        <button type="button" class="gallery-slide__modal-close">
+                            <svg>
+                                <use xlink:href="#close"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @@include("_footer.html")
+    </main>
+    @@include("_modals.html")
+</body>
+
+@@include("_sprite.svg")
+
+<script src="js/common.js?v=0"></script>
+
+</html>

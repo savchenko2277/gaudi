@@ -1,0 +1,66 @@
+@use 'lib' as *;
+
+.promo-how {
+	$self: &;
+
+	background: var(--green);
+	color: var(--sand);
+	padding-top: fluid(253px, 172px);
+	padding-bottom: 60px;
+	position: relative;
+	overflow: hidden;
+
+	&__container {
+
+	}
+
+	&__title {
+		text-transform: uppercase;
+		font-weight: 300;
+		font-size: fluid(170px, 50px);
+		line-height: 100%;
+		margin-bottom: 133px;
+
+		@include media("<=xs") {
+			margin-bottom: 236px;
+		}
+	}
+
+	&__links {
+		display: flex;
+		flex-direction: row;
+		gap: fluid(20px, 10px);
+		flex-wrap: wrap;
+	}
+
+	&__link {
+		@include flex-center;
+
+		font-weight: 500;
+		font-size: fluid(16px, 14px);
+		text-transform: uppercase;
+		color: var(--sand);
+		border: 1px solid var(--sand);
+		border-radius: 30px;
+		padding: fluid(24.5px, 20.5px) 15px;
+		line-height: 100%;
+		min-width: fluid(194px, 0px);
+		transition: all var(--trans);
+
+		&.is-active, &:hover {
+			background: var(--sand);
+			color: var(--green);
+		}
+	}
+
+	&__image {
+		position: absolute;
+		top: 70px; right: 0;
+		width: 55%;
+
+		@include media("<=xs") {
+			width: 100%; top: 30%;
+		}
+	}
+
+}
