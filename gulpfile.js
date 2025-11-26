@@ -109,19 +109,19 @@ function html() {
 		.src(pth.src.html)
 		.pipe($.fileInclude({ prefix: '@@', basepath: pth.src.tmpl }))
 		.on('error', swallowError)
-		.pipe(
-			$.if(
-				isProd,
-				$.typograf({
-					locale: ['ru', 'en-US'],
-					htmlEntity: { type: 'digit' },
-					safeTags: [
-						['<\\?php', '\\?>'],
-						['<no-typography>', '</no-typography>'],
-					],
-				})
-			)
-		)
+		// .pipe(
+		// 	$.if(
+		// 		isProd,
+		// 		$.typograf({
+		// 			locale: ['ru', 'en-US'],
+		// 			htmlEntity: { type: 'digit' },
+		// 			safeTags: [
+		// 				['<\\?php', '\\?>'],
+		// 				['<no-typography>', '</no-typography>'],
+		// 			],
+		// 		})
+		// 	)
+		// )
 		.pipe($.replace(/(\.(css|js)\?v=)\d+\b/g, `$1${version}`))
 		.pipe(gulp.dest(pth.pbl.html))
 		.pipe($.if(isSync, $.browserSync.stream()));
