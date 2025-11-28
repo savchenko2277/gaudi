@@ -90,6 +90,7 @@ export const driveTabs = (props = {}) => {
 				});
 			}
 
+			this.currentActive = i;
 			this.props.onTick?.call(this, i);
 		}
 		
@@ -97,6 +98,23 @@ export const driveTabs = (props = {}) => {
 			button.classList.remove(this.props.cls);
 			this.selects.map(set => set[i].classList.remove(this.props.cls));
 		});
+
+		set = (index, event) => {
+			const targetIndex = Number(index);
+			if (
+				Number.isNaN(targetIndex) ||
+				targetIndex < 0 ||
+				targetIndex >= this.controls.length
+			) {
+				return;
+			}
+
+			this.#setActive(targetIndex, event);
+		}
+
+		setActive = (index, event) => {
+			this.set(index, event);
+		}
 
 		move = (direction = 1) => {
 			this.currentActive += direction;

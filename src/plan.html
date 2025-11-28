@@ -9,27 +9,144 @@
 
     <main class="site-container">
 
-        <section class="plan">
+        <section class="plan"
+            data-path-popup
+            data-path-popup-trigger="hover"
+            data-path-popup-container=".plan__frame"
+            data-path-popup-popup=".plan__popup"
+            data-path-popup-align="right">
             <div class="plan__wrapper">
+                <div class="plan__popup">
+                    <h4 class="plan__popup-title">
+                        <b>2</b> этаж
+                    </h4>
+                    <p class="plan__popup-text">
+                        28 АПАРТАМЕНТОВ
+                    </p>
+                    <p class="plan__popup-price">
+                        от 5 500 900 ₽
+                    </p>
+                </div>
                 <div class="plan__frame">
                     <svg class="plan__frame-svg" width="4096" height="2302" viewBox="0 0 4096 2302" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M567.5 1343.5L350 1416V1546.5H567.5H1698.5L2626.5 1521L3351.5 1546.5V1343.5L2626.5 1285.5L1698.5 1343.5H567.5Z"
-                            fill="#62A25C" fill-opacity="0.4" />
+                            fill="#62A25C" fill-opacity="0.4" class="plan__frame-path" />
                         <path
                             d="M566.5 1341L347 1416V1286L566.5 1148H1768.5L2637 1038L3354 1165.5V1358.5L2637 1286L1768.5 1341H566.5Z"
-                            fill="#62A25C" fill-opacity="0.4" />
+                            fill="#62A25C" fill-opacity="0.4" class="plan__frame-path" />
                         <path
                             d="M569.5 1118L350 1193V1063L569.5 925H1771.5L2640 815L3357 942.5V1135.5L2640 1063L1771.5 1118H569.5Z"
-                            fill="#62A25C" fill-opacity="0.4" />
+                            fill="#62A25C" fill-opacity="0.4" class="plan__frame-path" />
                         <path
                             d="M569.5 911L350 986V856L569.5 718H1771.5L2640 608L3357 735.5V928.5L2640 856L1771.5 911H569.5Z"
-                            fill="#62A25C" fill-opacity="0.4" />
+                            fill="#62A25C" fill-opacity="0.4" class="plan__frame-path" />
                     </svg>
                     <img src="./img/plan/bg.webp" alt="" class="plan__frame-img">
                 </div>
             </div>
+
+            <div data-header-color="green" class="plan-second">
+                <div class="plan-second__container container">
+                    <div class="plan-second__popup">
+                        <p class="plan-second__popup-num">№217</p>
+                        <ul class="plan-second__popup-list">
+                            <li>S - 44,37 м2</li>
+                            <li>Кол-во комнат - 2</li>
+                            <li>Этаж - 2</li>
+                        </ul>
+                        <p class="plan-second__popup-price">7 535 900 ₽</p>
+                    </div>
+                    <div class="plan-second__side">
+                        <a href="#" class="plan-second__back">
+                            <div class="plan-second__back-icon">
+                                <svg>
+                                    <use xlink:href="#arrow-left"></use>
+                                </svg>
+                            </div>
+                            НАЗАД
+                        </a>
+                        <div class="plan-second__navigation">
+                            <button type="button" class="plan-second__navigation-btn active">1</button>
+                            <button type="button" class="plan-second__navigation-btn">2</button>
+                            <button type="button" class="plan-second__navigation-btn">3</button>
+                            <button type="button" class="plan-second__navigation-btn">4</button>
+                        </div>
+                    </div>
+                    <div class="plan-second__tabs-container">
+                        <div class="plan-second__tab active">
+                            <div class="plan-second__frame">
+                                <img src="./img/plan/frame.webp" alt="" class="plan-second__frame-img">
+                                <svg class="plan-second__frame-svg" width="1758" height="1471" viewBox="0 0 1758 1471"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M868 1254.5V937.5H990.5V1254.5L977 1255L973.5 1281.5L884.5 1272V1254.5H868Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path
+                                        d="M1113 1254V937H1235.5V1254L1222 1254.5L1218.5 1281L1129.5 1271.5V1254H1113Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path d="M991 1254V937H1113.5V1254L1100 1254.5L1096.5 1281L1007.5 1271.5V1254H991Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                </svg>
+
+                            </div>
+                        </div>
+                        <div class="plan-second__tab">
+                            <div class="plan-second__frame">
+                                <img src="./img/plan/frame.webp" alt="" class="plan-second__frame-img">
+                                <svg class="plan-second__frame-svg" width="1758" height="1471" viewBox="0 0 1758 1471"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M868 1254.5V937.5H990.5V1254.5L977 1255L973.5 1281.5L884.5 1272V1254.5H868Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path
+                                        d="M1113 1254V937H1235.5V1254L1222 1254.5L1218.5 1281L1129.5 1271.5V1254H1113Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path d="M991 1254V937H1113.5V1254L1100 1254.5L1096.5 1281L1007.5 1271.5V1254H991Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                </svg>
+
+                            </div>
+                        </div>
+                        <div class="plan-second__tab">
+                            <div class="plan-second__frame">
+                                <img src="./img/plan/frame.webp" alt="" class="plan-second__frame-img">
+                                <svg class="plan-second__frame-svg" width="1758" height="1471" viewBox="0 0 1758 1471"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M868 1254.5V937.5H990.5V1254.5L977 1255L973.5 1281.5L884.5 1272V1254.5H868Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path
+                                        d="M1113 1254V937H1235.5V1254L1222 1254.5L1218.5 1281L1129.5 1271.5V1254H1113Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path d="M991 1254V937H1113.5V1254L1100 1254.5L1096.5 1281L1007.5 1271.5V1254H991Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                </svg>
+
+                            </div>
+                        </div>
+                        <div class="plan-second__tab">
+                            <div class="plan-second__frame">
+                                <img src="./img/plan/frame.webp" alt="" class="plan-second__frame-img">
+                                <svg class="plan-second__frame-svg" width="1758" height="1471" viewBox="0 0 1758 1471"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M868 1254.5V937.5H990.5V1254.5L977 1255L973.5 1281.5L884.5 1272V1254.5H868Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path
+                                        d="M1113 1254V937H1235.5V1254L1222 1254.5L1218.5 1281L1129.5 1271.5V1254H1113Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                    <path d="M991 1254V937H1113.5V1254L1100 1254.5L1096.5 1281L1007.5 1271.5V1254H991Z"
+                                        fill="#62A25C" fill-opacity="0.4" />
+                                </svg>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
         @@include("_footer.html")

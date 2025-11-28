@@ -8,6 +8,12 @@
 	background: var(--sea);
 	padding-top: 120px;
 
+	@include media("<=md") {
+		height: auto;
+		padding-top: 0;
+		background: none;
+	}
+
 	&__wrapper {
 		height: 100%;
 		width: 100%;
@@ -15,6 +21,11 @@
 		align-items: start;
 		justify-content: center;
 		overflow: hidden;
+		position: relative;
+
+		@include media("<=md") {
+			display: none;
+		}
 	}
 
 	&__frame {
@@ -29,12 +40,79 @@
 		z-index: 1;
 		object-fit: cover;
 		width: 100%;
+
+		path {
+			cursor: pointer;
+			transition: all var(--trans);
+			opacity: 0;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
 	}
 
 	&__frame-img {
 		width: 100%;
 		object-fit: contain;
 		z-index: 0;
+	}
+
+	&__popup {
+		position: fixed;
+		z-index: 10;
+		padding: 40px;
+		background: var(--sand);
+		color: var(--sea);
+		width: 320px;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition: opacity var(--trans), visibility var(--trans), pointer-events var(--trans);
+
+		&.active {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: calc(100% - 5px); left: 50%;
+			background: url("../img/plan/pol.svg") no-repeat center center / cover;
+			transform: translateX(-50%);
+			width: 35px; height: 16px;
+		}
+	}
+
+	&__popup-title {
+		font-size: 30px;
+		font-family: "Bounded";
+		display: flex;
+		flex-direction: row;
+		align-items: start;
+		line-height: 100%;
+		gap: 20px;
+		margin-bottom: 25px;
+
+		b {
+			font-size: 100px;
+			line-height: 100%;
+		}
+	}
+
+	&__popup-text {
+		font-size: 16px;
+		font-weight: 300;
+		text-transform: uppercase;
+		font-family: "Bounded";
+		margin-bottom: 20px;
+	}
+
+	&__popup-price {
+		font-size: 20px;
+		font-weight: 600;
 	}
 
 }

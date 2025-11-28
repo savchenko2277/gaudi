@@ -114,7 +114,7 @@
 	}
 
 	&__map {
-		height: 645px;
+		height: fluid(645px, 400px);
 	}
 
 	&__fall {

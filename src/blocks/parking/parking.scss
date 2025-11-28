@@ -234,7 +234,9 @@
 			opacity: 0;
 		}
 
-		@include media("<=xlg") {
+		@include media("<=xxlg") {
+			left: auto !important;
+			right: 0 !important;
 			&::before {
 				opacity: 1;
 			}

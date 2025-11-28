@@ -554,6 +554,25 @@ const setGallery = () => {
 }
 
 const setLocationSwipers = () => {
+	const roadPhotos = Array.from(document.querySelectorAll('.location-main__photos .location-main__photo'));
+
+	const updateRoadPhotos = (slideEl) => {
+		if (!slideEl || !roadPhotos.length) return;
+
+		const sources = [
+			slideEl.dataset.photoPrimary || slideEl.dataset.photoFirst || slideEl.dataset.photo1,
+			slideEl.dataset.photoSecondary || slideEl.dataset.photoSecond || slideEl.dataset.photo2
+		];
+
+		roadPhotos.forEach((img, index) => {
+			const nextSrc = sources[index];
+			if (!nextSrc) return;
+			if (img.getAttribute('src') === nextSrc) return;
+
+			img.src = nextSrc;
+		});
+	};
+
 	const aboutSwiper = new Swiper('.location-main__about-swiper', {
 		modules: [Navigation],
 		slidesPerView: 1,
@@ -600,8 +619,11 @@ const setLocationSwipers = () => {
 			prevEl: '.location-main__road .location-main__navigation-btn_prev',
 		},
 		on: {
+			init: function () {
+				updateRoadPhotos(this.slides[this.activeIndex]);
+			},
 			slideChange: function () {
-
+				updateRoadPhotos(this.slides[this.activeIndex]);
 			}
 		}
 	});
@@ -746,89 +768,183 @@ const setClassOnClick = () => {
 };
 
 const setPathsPosition = () => {
-	const block = document.querySelector('.parking');
-	if (!block) return;
+	const blocks = document.querySelectorAll('[data-path-popup]');
+	if (!blocks.length) return;
 
-	const container = block.querySelector('.parking__container');
-	const paths = block.querySelectorAll('path');
-	if (!container || !paths.length) return;
+	blocks.forEach(block => {
+		const containerSelector = block.dataset.pathPopupContainer || '.parking__container';
+		const popupSelector = block.dataset.pathPopupPopup || '.parking__popup';
+		const pathSelector = block.dataset.pathPopupPaths || 'path';
+		const container = containerSelector ? block.querySelector(containerSelector) : block;
+		const popup = block.querySelector(popupSelector);
+		if (!container || !popup) return;
 
-	const containerRect = container.getBoundingClientRect();
+		const paths = container.querySelectorAll(pathSelector);
+		if (!paths.length) return;
 
-	paths.forEach(path => {
-		const pathLength = path.getTotalLength();
-		path.setAttribute('stroke-dasharray', pathLength);
-		path.setAttribute('stroke-dashoffset', pathLength);
+		const relativeElement = popup.offsetParent instanceof HTMLElement ? popup.offsetParent : container;
+		const referenceRect = relativeElement.getBoundingClientRect();
 
-		const rect = path.getBoundingClientRect();
-		const offsets = {
-			top: rect.top - containerRect.top,
-			right: containerRect.right - rect.right,
-			bottom: containerRect.bottom - rect.bottom,
-			left: rect.left - containerRect.left
-		};
+		paths.forEach(path => {
+			const pathLength = path.getTotalLength();
+			path.setAttribute('stroke-dasharray', pathLength);
+			path.setAttribute('stroke-dashoffset', pathLength);
 
-		Object.entries(offsets).forEach(([direction, value]) => {
-			const rounded = Math.round(value);
-			path.style.setProperty(`--offset-${direction}`, `${rounded}px`);
-			const datasetKey = `offset${direction.charAt(0).toUpperCase()}${direction.slice(1)}`;
-			path.dataset[datasetKey] = `${rounded}`;
+			const rect = path.getBoundingClientRect();
+			const offsets = {
+				top: rect.top - referenceRect.top,
+				right: referenceRect.right - rect.right,
+				bottom: referenceRect.bottom - rect.bottom,
+				left: rect.left - referenceRect.left
+			};
+
+			Object.entries(offsets).forEach(([direction, value]) => {
+				const rounded = Math.round(value);
+				path.style.setProperty(`--offset-${direction}`, `${rounded}px`);
+				const datasetKey = `offset${direction.charAt(0).toUpperCase()}${direction.slice(1)}`;
+				path.dataset[datasetKey] = `${rounded}`;
+			});
 		});
 	});
 };
 
 const setPathOnClick = () => {
-	const block = document.querySelector('.parking');
-	if (!block) return;
+	const blocks = document.querySelectorAll('[data-path-popup]');
+	if (!blocks.length) return;
 
-	const container = block.querySelector('.parking__container');
-	const popup = block.querySelector('.parking__popup');
-	const paths = block.querySelectorAll('path');
-	if (!container || !popup || !paths.length) return;
-
-	const pathElements = Array.from(paths);
 	const xlgQuery = window.matchMedia('(max-width: 1280px)');
+	const hoverNoneQuery = window.matchMedia('(hover: none)');
+	const pointerCoarseQuery = window.matchMedia('(pointer: coarse)');
+	const isTouchDevice = () => hoverNoneQuery.matches || pointerCoarseQuery.matches;
 
-	const getOffsetTop = (path) => {
-		const stored = Number(path.dataset.offsetTop);
-		if (!Number.isNaN(stored)) {
-			return stored;
-		}
+	blocks.forEach(block => {
+		const containerSelector = block.dataset.pathPopupContainer || '.parking__container';
+		const popupSelector = block.dataset.pathPopupPopup || '.parking__popup';
+		const pathSelector = block.dataset.pathPopupPaths || 'path';
+		const triggerDesktop = block.dataset.pathPopupTrigger || 'click';
+		const triggerMobile = block.dataset.pathPopupTriggerMobile || triggerDesktop;
+		const activeTrigger = isTouchDevice() ? triggerMobile : triggerDesktop;
+		const horizontalAlign = block.dataset.pathPopupAlign || 'center';
+		const verticalAlign = block.dataset.pathPopupVertical || 'auto';
+		const shiftX = Number(block.dataset.pathPopupShiftX || 0);
+		const shiftY = Number(block.dataset.pathPopupShiftY || 0);
 
-		const containerRect = container.getBoundingClientRect();
-		return path.getBoundingClientRect().top - containerRect.top;
-	};
+		const container = containerSelector ? block.querySelector(containerSelector) : block;
+		const popup = block.querySelector(popupSelector);
+		if (!container || !popup) return;
 
-	const positionPopup = (path) => {
-		const offsetTop = getOffsetTop(path);
-		const { height } = path.getBoundingClientRect();
-		const delta = height * 0.5;
-		const prefersLower = xlgQuery.matches;
-		const top = prefersLower ? offsetTop + delta : offsetTop - delta;
+		const paths = container.querySelectorAll(pathSelector);
+		if (!paths.length) return;
 
-		popup.style.top = `${Math.round(top)}px`;
-		popup.classList.add('active');
-	};
+		const pathElements = Array.from(paths);
+		const relativeElement = popup.offsetParent instanceof HTMLElement ? popup.offsetParent : container;
 
-	pathElements.forEach(path => {
-		path.addEventListener('click', (event) => {
-			event.stopPropagation();
-			positionPopup(path);
-		});
-	});
+		const getOffset = (path, axis = 'top') => {
+			const datasetMap = {
+				left: 'offsetLeft',
+				right: 'offsetRight',
+				bottom: 'offsetBottom',
+				top: 'offsetTop'
+			};
+			const datasetKey = datasetMap[axis] || 'offsetTop';
+			const stored = Number(path.dataset[datasetKey]);
+			if (!Number.isNaN(stored)) {
+				return stored;
+			}
 
-	document.addEventListener('click', (event) => {
-		const target = event.target;
-		if (!(target instanceof Element)) {
+			const referenceRect = relativeElement.getBoundingClientRect();
+			const rect = path.getBoundingClientRect();
+			switch (axis) {
+				case 'left':
+					return rect.left - referenceRect.left;
+				case 'right':
+					return referenceRect.right - rect.right;
+				case 'bottom':
+					return referenceRect.bottom - rect.bottom;
+				default:
+					return rect.top - referenceRect.top;
+			}
+		};
+
+		const positionPopup = (path) => {
+			const rect = path.getBoundingClientRect();
+			const offsetTop = getOffset(path, 'top');
+			const offsetLeft = getOffset(path, 'left');
+			const offsetRight = horizontalAlign === 'right' ? getOffset(path, 'right') : null;
+			const delta = rect.height * 0.5;
+			const prefersLower = xlgQuery.matches;
+			const popupHeight = popup.offsetHeight || 0;
+			const popupWidth = popup.offsetWidth || 0;
+
+			let top;
+			if (verticalAlign === 'center') {
+				const popupHalf = popupHeight * 0.5;
+				top = offsetTop + delta - popupHalf + shiftY;
+			} else {
+				top = (prefersLower ? offsetTop + delta : offsetTop - delta) + shiftY;
+			}
+
+			let left = offsetLeft - rect.width * 0.5 + shiftX;
+			let right = null;
+
+			popup.style.left = '';
+			popup.style.right = '';
+
+			if (horizontalAlign === 'left') {
+				left = offsetLeft + shiftX;
+			} else if (horizontalAlign === 'right' && offsetRight !== null) {
+				left = null;
+				right = offsetRight + shiftX;
+			} else if (horizontalAlign === 'outside-right') {
+				left = offsetLeft + rect.width + shiftX;
+			} else if (horizontalAlign === 'outside-left') {
+				left = offsetLeft - popupWidth + shiftX;
+			}
+
+			popup.style.top = `${Math.round(top)}px`;
+			if (left !== null) {
+				popup.style.left = `${Math.round(left)}px`;
+			} else if (right !== null) {
+				popup.style.right = `${Math.round(right)}px`;
+			}
+			popup.classList.add('active');
+		};
+
+		const hidePopup = () => {
 			popup.classList.remove('active');
-			return;
+		};
+
+		const handleDocumentClick = (event) => {
+			const target = event.target;
+			if (!(target instanceof Element)) {
+				hidePopup();
+				return;
+			}
+
+			if (popup.contains(target)) return;
+			const clickedPath = target.closest('path');
+			if (clickedPath && pathElements.includes(clickedPath)) return;
+
+			hidePopup();
+		};
+
+		if (activeTrigger === 'hover') {
+			pathElements.forEach(path => {
+				path.addEventListener('mouseenter', () => positionPopup(path));
+			});
+
+			block.addEventListener('mouseleave', hidePopup);
+		} else {
+			pathElements.forEach(path => {
+				path.addEventListener('click', (event) => {
+					event.preventDefault();
+					event.stopPropagation();
+					positionPopup(path);
+				});
+			});
 		}
 
-		if (popup.contains(target)) return;
-		const clickedPath = target.closest('.parking path');
-		if (clickedPath) return;
-
-		popup.classList.remove('active');
+		document.addEventListener('click', handleDocumentClick);
 	});
 };
 
@@ -938,19 +1054,6 @@ const setModals = () => {
 		});
 	});
 };
-
-const setLockScrollMap = () => {
-	const map = document.querySelector('#map');
-	if (!map) return;
-
-	map.addEventListener('mouseenter', (e) => {
-		disableScroll();
-	});
-
-	map.addEventListener('mouseleave', (e) => {
-		enableScroll();
-	});
-}
 
 const setStepsGallery = () => {
 	const section = document.querySelector('.steps');
@@ -1238,6 +1341,84 @@ const setGallerySwipers = () => {
 	});
 }
 
+const setPlanScript = () => {
+	const block = document.querySelector('.plan');
+	if (!block) return;
+
+	const tabs = driveTabs({
+		container: block,
+		controls: '.plan-second__navigation-btn',
+		selects: '.plan-second__tab',
+		cls: 'active'
+	});
+
+	const planSecond = block.querySelector('.plan-second');
+	const backLink = planSecond?.querySelector('.plan-second__back');
+	const desktopQuery = window.matchMedia('(min-width: 961px)');
+
+	const openPlanSecond = () => {
+		if (!planSecond || !desktopQuery.matches) return;
+		if (!planSecond.classList.contains('active')) {
+			planSecond.classList.add('active');
+			disableScroll();
+		}
+	};
+
+	const closePlanSecond = () => {
+		if (!planSecond) return;
+		if (planSecond.classList.contains('active')) {
+			planSecond.classList.remove('active');
+			enableScroll();
+		}
+	};
+
+	const handleViewportChange = (event) => {
+		if (!event.matches) {
+			closePlanSecond();
+		}
+	};
+
+	if (typeof desktopQuery.addEventListener === 'function') {
+		desktopQuery.addEventListener('change', handleViewportChange);
+	} else if (typeof desktopQuery.addListener === 'function') {
+		desktopQuery.addListener(handleViewportChange);
+	}
+
+	backLink?.addEventListener('click', (event) => {
+		if (!desktopQuery.matches) return;
+		event.preventDefault();
+		closePlanSecond();
+	});
+
+	const pathElements = block.querySelectorAll('.plan__frame-path');
+	if (!pathElements.length || typeof tabs?.set !== 'function') return;
+
+	const controlsCount = tabs.controls?.length ?? 0;
+
+	pathElements.forEach((path, defaultIndex) => {
+		path.addEventListener('click', (event) => {
+			if (desktopQuery.matches) {
+				event.preventDefault();
+				openPlanSecond();
+			}
+
+			const targetAttr = path.dataset.planTab ?? path.dataset.planTarget ?? path.dataset.tabIndex;
+			let targetIndex = defaultIndex;
+
+			if (typeof targetAttr !== 'undefined') {
+				const parsed = Number(targetAttr);
+				if (!Number.isNaN(parsed)) {
+					if (parsed >= 0 && parsed < controlsCount) {
+						targetIndex = parsed;
+					}
+				}
+			}
+
+			tabs.set(targetIndex);
+		});
+	});
+};
+
 window.addEventListener("load", () => {
 	updateVH();
 	setScrollbarWidth();
@@ -1255,12 +1436,13 @@ window.addEventListener("load", () => {
 	setParamsAdaptive();
 	setNewsModal();
 	setModals();
-	setLockScrollMap();
 	setStepsGallery();
 	setStepsTabs();
 	setGallerySwipers();
+	setPlanScript();
 
 	window.addEventListener("resize", throttle(setParamsAdaptive, 200));
 	window.addEventListener("resize", throttle(setBlockAnimation, 200));
 	window.addEventListener("resize", throttle(setPathsPosition, 200));
 });
+
