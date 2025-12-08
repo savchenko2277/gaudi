@@ -72,6 +72,12 @@
 		@include media("<=md") {
 			max-height: 100vh;
 		}
+
+		.swiper-slide {
+			@include media(">xlg") {
+				width: 896px !important;
+			}
+		}
 	}
 
 }

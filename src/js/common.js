@@ -46,10 +46,22 @@ const setHeader = () => {
 
 	const burger = header.querySelector('.header__burger');
 	const colorSections = Array.from(document.querySelectorAll('[data-header-color]'));
+	const COLOR_LOCK_ATTR = 'data-header-color-lock';
 
 	let lastScrollY = 0;
 
+	const hasHeaderColorLock = () => {
+		const root = document.documentElement;
+		const body = document.body;
+
+		return header.hasAttribute(COLOR_LOCK_ATTR)
+			|| body?.hasAttribute(COLOR_LOCK_ATTR)
+			|| root?.hasAttribute(COLOR_LOCK_ATTR);
+	};
+
 	const clearHeaderMods = () => {
+		if (hasHeaderColorLock()) return;
+
 		header.classList.forEach(cls => {
 			if (cls.startsWith('header_')) {
 				header.classList.remove(cls);
@@ -59,6 +71,8 @@ const setHeader = () => {
 
 	const applyHeaderColorFromSections = () => {
 		if (!colorSections.length) return;
+		if (hasHeaderColorLock()) return;
+
 		if (header.classList.contains('is-open')) {
 			clearHeaderMods();
 			return;
@@ -127,7 +141,7 @@ const setSmoothPageScroll = () => {
 	lenis = new Lenis({
 		smooth: true,
 		prevent: (node) => {
-			return node.closest('.modal');
+			return node.closest('.modal') || node.closest('.header__menu');
 		}
 	});
 
@@ -1361,6 +1375,7 @@ const setPlanScript = () => {
 		if (!planSecond.classList.contains('active')) {
 			planSecond.classList.add('active');
 			disableScroll();
+			document.querySelector(".header").classList.add("header_green");
 		}
 	};
 
@@ -1369,6 +1384,7 @@ const setPlanScript = () => {
 		if (planSecond.classList.contains('active')) {
 			planSecond.classList.remove('active');
 			enableScroll();
+			document.querySelector(".header").classList.remove("header_green");
 		}
 	};
 

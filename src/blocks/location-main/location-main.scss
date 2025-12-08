@@ -161,7 +161,7 @@
 	&__road {
 		width: 65%;
 		padding-top: fluid(200px, 30px);
-		padding-left: fluid(279px, 30px);
+		padding-left: fluid(279px, 30px, 1920px, 1440px);
 		padding-bottom: 60px;
 		background: var(--brick);
 		height: fit-content;
@@ -198,7 +198,7 @@
 		}
 
 		span {
-			line-height: 100%;
+			line-height: 140%;
 			font-weight: 300;
 		}
 		font-size: fluid(30px, 16px);
